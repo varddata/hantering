@@ -24,12 +24,26 @@
     header {
       background-color: var(--env-header-background);
       color: white;
-      padding: 1rem 2rem;
+      padding: 1rem 2rem 0.5rem;
       text-align: center;
     }
     h1 {
       margin: 0;
       font-weight: 600;
+    }
+    .disclaimer {
+      background-color: #ffffff;
+      color: #222222;
+      border-left: 5px solid #FFA500;
+      margin: 1rem auto;
+      padding: 1rem;
+      max-width: 800px;
+      font-size: 0.95rem;
+      text-align: left;
+    }
+    .disclaimer a {
+      color: #004c6c;
+      text-decoration: underline;
     }
     .controls {
       text-align: center;
@@ -91,6 +105,13 @@
     <h1>Regiongemensam vårddataprojekt</h1>
     <p>Här hittar du våra kortfilmer om projektets olika delar</p>
   </header>
+
+  <div class="disclaimer">
+    <strong>OBS:</strong> På denna sida återfinns test- och betaleveranser från projektet. De officiella resultaten finns här:
+    <a href="https://kunskapsstyrningvard.se/kunskapsstyrningvard/datauppfoljningochanalys/regiongemensamhanteringavvarddata.89146.html" target="_blank" rel="noopener noreferrer">
+      https://kunskapsstyrningvard.se/kunskapsstyrningvard/datauppfoljningochanalys/regiongemensamhanteringavvarddata.89146.html
+    </a>
+  </div>
 
   <div class="controls">
     <input type="text" id="searchInput" placeholder="Sök efter titel eller tagg...">
