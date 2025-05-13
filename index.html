@@ -140,7 +140,7 @@
     </div>
 
     <div class="video-card" data-title="Användningsfall" data-tags="användning, forskning, AI">
-      <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" allowfullscreen></iframe>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/VIDEO_ID_3" allowfullscreen></iframe>
       <div class="video-info">
         <h2>Video 3: Användningsfall</h2>
         <p><strong>Datum:</strong> 2025-05-18</p>
@@ -150,7 +150,7 @@
     </div>
 
     <div class="video-card" data-title="Nästa steg" data-tags="framtid, planering, roadmap">
-      <iframe src="https://www.youtube.com/embed/VIDEO_ID_4" allowfullscreen></iframe>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/VIDEO_ID_4" allowfullscreen></iframe>
       <div class="video-info">
         <h2>Video 4: Nästa steg</h2>
         <p><strong>Datum:</strong> 2025-05-20</p>
@@ -182,11 +182,11 @@
       }
     });
 
-    // Återställ sorteringsordning vid sidladdning
-    window.addEventListener('DOMContentLoaded', () => {
-      const savedOrder = localStorage.getItem('videoOrder');
-      if (savedOrder) container.innerHTML = savedOrder;
-    });
+    // Inaktiverad återställning från localStorage för att tillåta ny HTML
+    // window.addEventListener('DOMContentLoaded', () => {
+    //   const savedOrder = localStorage.getItem('videoOrder');
+    //   if (savedOrder) container.innerHTML = savedOrder;
+    // });
   </script>
 </body>
 </html>
