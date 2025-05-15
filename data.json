@@ -1,0 +1,37 @@
+[
+  {
+    "type": "video",
+    "src": "https://www.youtube.com/embed/9SYTfU5plrY",
+    "title": "Introduktion",
+    "description": "Kort introduktion till projektet",
+    "tag": "Film"
+  },
+  {
+    "type": "video",
+    "src": "https://www.youtube.com/embed/OKl4v1GAnGI",
+    "title": "Datakvalitet",
+    "description": "Hur vi säkrar datakvalitet",
+    "tag": "Film"
+  },
+  {
+    "type": "video",
+    "src": "https://www.youtube.com/embed/y6120QOlsfU",
+    "title": "Användningsfall",
+    "description": "Exempel på tillämpningar",
+    "tag": "Film"
+  },
+  {
+    "type": "report",
+    "src": "rapporter/strategi.pdf",
+    "title": "Strategirapport",
+    "description": "Sammanfattning av strategi",
+    "tag": "PDF"
+  },
+  {
+    "type": "report",
+    "src": "rapporter/datamodell.pdf",
+    "title": "Datamodell",
+    "description": "Teknisk beskrivning av modellen",
+    "tag": "PDF"
+  }
+]
