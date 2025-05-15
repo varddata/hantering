@@ -5,158 +5,87 @@
   <title>Regiongemensam Vårddataprojekt</title>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --env-font-family: 'Source Sans Pro', sans-serif;
-      --env-font-color: #222222;
-      --env-background-color: #ffffff;
-      --env-header-background: #377D7A;
-    }
-
     body {
-      font-family: var(--env-font-family);
-      margin: 0;
-      padding: 0;
-      background-color: var(--env-background-color);
-      color: var(--env-font-color);
-      font-size: 16px;
-    }
-    header {
-      background-color: var(--env-header-background);
-      color: white;
-      padding: 1rem 2rem;
-      text-align: center;
+      font-family: 'Source Sans Pro', sans-serif;
+      padding: 2rem;
+      background-color: #ffffff;
+      color: #222;
+      max-width: 600px;
+      margin: auto;
     }
     h1 {
-      margin: 0;
-      font-weight: 600;
+      text-align: center;
+      color: #377D7A;
     }
-    .disclaimer {
-      background-color: #ffffff;
-      color: #222222;
-      border-left: 5px solid #FFA500;
-      margin: 1rem auto;
-      padding: 1rem;
-      max-width: 800px;
-      font-size: 0.95rem;
-      text-align: left;
-    }
-    .disclaimer a {
-      color: #004c6c;
-      text-decoration: underline;
-    }
-    .filter {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      padding: 1rem;
-    }
-    .main-layout {
-      display: flex;
-      height: calc(100vh - 200px);
-    }
-    .sidebar {
-      width: 320px;
-      overflow-y: auto;
-      border-right: 1px solid #ccc;
-      padding: 1rem;
-    }
-    .sidebar-item {
+    form {
       display: flex;
       flex-direction: column;
-      margin-bottom: 1rem;
-      cursor: pointer;
+      gap: 1rem;
     }
-    .sidebar-item iframe,
-    .sidebar-item img {
-      width: 100%;
-      border-radius: 4px;
-    }
-    .sidebar-item .title {
-      margin-top: 0.5rem;
-      font-size: 0.95rem;
+    label {
       font-weight: 600;
-      color: #004c6c;
     }
-    .content-display {
-      flex: 1;
+    input, select, textarea, button {
+      font-family: inherit;
+      font-size: 1rem;
+      padding: 0.5rem;
+    }
+    textarea {
+      resize: vertical;
+    }
+    #output {
+      margin-top: 2rem;
+      background: #f4f4f4;
       padding: 1rem;
-    }
-    .content-display iframe {
-      width: 100%;
-      height: 90vh;
-      border: none;
-    }
-    .tag {
-      display: inline-block;
-      background-color: #e0f0f8;
-      color: #004c6c;
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 0.8rem;
-      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      white-space: pre-wrap;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Regiongemensam vårddatahantering</h1>
-    <p>Konkretisering av strategi för regiongemensam vårddatahantering.</p>
-  </header>
+  <h1>Skapa JSON-poster</h1>
+  <form id="jsonForm">
+    <label for="type">Typ:</label>
+    <select id="type" required>
+      <option value="video">Film</option>
+      <option value="report">Rapport</option>
+    </select>
 
-  <div class="disclaimer">
-    <strong>OBS:</strong> På denna sida återfinns test- och betaleveranser från projektet. De officiella resultaten finns här:
-    <a href="https://kunskapsstyrningvard.se/kunskapsstyrningvard/datauppfoljningochanalys/regiongemensamhanteringavvarddata.89146.html" target="_blank" rel="noopener noreferrer">
-      kunskapsstyrningvard.se</a>
-  </div>
+    <label for="src">Länk (YouTube/embed eller PDF-fil):</label>
+    <input type="url" id="src" required>
 
-  <div class="filter">
-    <label><input type="checkbox" id="showVideos" checked> Visa filmer</label>
-    <label><input type="checkbox" id="showReports" checked> Visa rapporter</label>
-  </div>
+    <label for="title">Titel:</label>
+    <input type="text" id="title" required>
 
-  <div class="main-layout">
-    <aside class="sidebar" id="itemList">
-      <!-- Exempel: Video -->
-      <div class="sidebar-item" data-type="video" data-src="https://www.youtube.com/embed/9SYTfU5plrY">
-        <iframe src="https://www.youtube.com/embed/9SYTfU5plrY" allowfullscreen></iframe>
-        <span class="title">Video 1: Introduktion</span>
-        <span class="tag">Film</span>
-      </div>
-      <!-- Exempel: Rapport -->
-      <div class="sidebar-item" data-type="report" data-src="https://example.com/rapport1.pdf">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg" alt="PDF" />
-        <span class="title">Rapport 1: Datamodell</span>
-        <span class="tag">PDF</span>
-      </div>
-    </aside>
-    <div class="content-display" id="viewer">
-      <iframe src="https://www.youtube.com/embed/9SYTfU5plrY" allowfullscreen></iframe>
-    </div>
-  </div>
+    <label for="description">Beskrivning:</label>
+    <textarea id="description" rows="3" required></textarea>
+
+    <label for="tag">Tagg:</label>
+    <input type="text" id="tag" required>
+
+    <button type="submit">Skapa JSON-post</button>
+  </form>
+
+  <div id="output"></div>
 
   <script>
-    const items = document.querySelectorAll('.sidebar-item');
-    const viewer = document.getElementById('viewer').querySelector('iframe');
+    const form = document.getElementById('jsonForm');
+    const output = document.getElementById('output');
 
-    items.forEach(item => {
-      item.addEventListener('click', () => {
-        viewer.src = item.dataset.src;
-      });
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const item = {
+        type: document.getElementById('type').value,
+        src: document.getElementById('src').value,
+        title: document.getElementById('title').value,
+        description: document.getElementById('description').value,
+        tag: document.getElementById('tag').value
+      };
+
+      output.textContent = JSON.stringify(item, null, 2);
     });
-
-    const showVideos = document.getElementById('showVideos');
-    const showReports = document.getElementById('showReports');
-
-    function filterItems() {
-      items.forEach(item => {
-        const type = item.dataset.type;
-        const show = (type === 'video' && showVideos.checked) || (type === 'report' && showReports.checked);
-        item.style.display = show ? 'flex' : 'none';
-      });
-    }
-
-    showVideos.addEventListener('change', filterItems);
-    showReports.addEventListener('change', filterItems);
   </script>
 </body>
 </html>
