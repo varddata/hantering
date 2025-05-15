@@ -2,7 +2,7 @@
 <html lang="sv">
 <head>
   <meta charset="UTF-8">
-  <title>Regiongemensam Vårddataprojekt</title>
+  <title>Skapa JSON-poster</title>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -41,6 +41,16 @@
       white-space: pre-wrap;
       font-size: 0.9rem;
     }
+    #copyBtn {
+      margin-top: 0.5rem;
+      background-color: #377D7A;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #copyBtn:hover {
+      background-color: #2e6765;
+    }
   </style>
 </head>
 <body>
@@ -68,10 +78,12 @@
   </form>
 
   <div id="output"></div>
+  <button id="copyBtn" style="display:none;">Kopiera till urklipp</button>
 
   <script>
     const form = document.getElementById('jsonForm');
     const output = document.getElementById('output');
+    const copyBtn = document.getElementById('copyBtn');
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -84,7 +96,17 @@
         tag: document.getElementById('tag').value
       };
 
-      output.textContent = JSON.stringify(item, null, 2);
+      const jsonString = JSON.stringify(item, null, 2);
+      output.textContent = jsonString;
+      copyBtn.style.display = 'inline-block';
+    });
+
+    copyBtn.addEventListener('click', () => {
+      const text = output.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        copyBtn.textContent = 'Kopierat!';
+        setTimeout(() => copyBtn.textContent = 'Kopiera till urklipp', 2000);
+      });
     });
   </script>
 </body>
