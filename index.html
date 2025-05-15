@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Regiongemensam Vårddataprojekt</title>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
   <style>
     :root {
       --env-font-family: 'Source Sans Pro', sans-serif;
@@ -24,7 +23,7 @@
     header {
       background-color: var(--env-header-background);
       color: white;
-      padding: 1rem 2rem 0.5rem;
+      padding: 1rem 2rem;
       text-align: center;
     }
     h1 {
@@ -45,58 +44,56 @@
       color: #004c6c;
       text-decoration: underline;
     }
-    .controls {
-      text-align: center;
-      margin-top: 1rem;
-    }
-    .controls input {
-      padding: 0.5rem;
-      margin-right: 0.5rem;
-      width: 200px;
-    }
-    .container {
-      padding: 2rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
-    .video-card {
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-      overflow: hidden;
+    .filter {
       display: flex;
-      flex-direction: column;
-      cursor: move;
-    }
-    .video-card iframe {
-      width: 100%;
-      height: 180px;
-      border: none;
-    }
-    .video-info {
+      justify-content: center;
+      gap: 1rem;
       padding: 1rem;
     }
-    .video-info h2 {
-      margin-top: 0;
-      font-size: 1.1rem;
-      color: #004c6c;
-      letter-spacing: normal;
-      font-style: normal;
+    .main-layout {
+      display: flex;
+      height: calc(100vh - 200px);
     }
-    .video-info p {
-      margin: 0.5rem 0;
+    .sidebar {
+      width: 320px;
+      overflow-y: auto;
+      border-right: 1px solid #ccc;
+      padding: 1rem;
+    }
+    .sidebar-item {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1rem;
+      cursor: pointer;
+    }
+    .sidebar-item iframe,
+    .sidebar-item img {
+      width: 100%;
+      border-radius: 4px;
+    }
+    .sidebar-item .title {
+      margin-top: 0.5rem;
       font-size: 0.95rem;
-      font-style: normal;
+      font-weight: 600;
+      color: #004c6c;
+    }
+    .content-display {
+      flex: 1;
+      padding: 1rem;
+    }
+    .content-display iframe {
+      width: 100%;
+      height: 90vh;
+      border: none;
     }
     .tag {
       display: inline-block;
       background-color: #e0f0f8;
       color: #004c6c;
       padding: 2px 8px;
-      margin-top: 0.5rem;
       border-radius: 4px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
     }
   </style>
 </head>
@@ -104,103 +101,62 @@
   <header>
     <h1>Regiongemensam vårddatahantering</h1>
     <p>Konkretisering av strategi för regiongemensam vårddatahantering.</p>
-    <p>Här hittar du våra kortfilmer om projektets olika delar.</p>
   </header>
 
   <div class="disclaimer">
     <strong>OBS:</strong> På denna sida återfinns test- och betaleveranser från projektet. De officiella resultaten finns här:
     <a href="https://kunskapsstyrningvard.se/kunskapsstyrningvard/datauppfoljningochanalys/regiongemensamhanteringavvarddata.89146.html" target="_blank" rel="noopener noreferrer">
-      https://kunskapsstyrningvard.se/kunskapsstyrningvard/datauppfoljningochanalys/regiongemensamhanteringavvarddata.89146.html
-    </a>
+      kunskapsstyrningvard.se</a>
   </div>
 
-  <div class="controls">
-    <input type="text" id="searchInput" placeholder="Sök efter titel eller tagg...">
+  <div class="filter">
+    <label><input type="checkbox" id="showVideos" checked> Visa filmer</label>
+    <label><input type="checkbox" id="showReports" checked> Visa rapporter</label>
   </div>
 
-  <main class="container" id="videoContainer">
-    <div class="video-card" data-title="Introduktion" data-tags="introduktion, start">
-      <div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%;
- padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
- border-radius: 8px; will-change: transform;">
-  <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-    src="https://www.canva.com/design/DAGnYCYNOHE/7jb4vVU88fF1IOVaQTsz9Q/watch?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
-  </iframe>
-</div>
-<a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGnYCYNOHE&#x2F;7jb4vVU88fF1IOVaQTsz9Q&#x2F;watch?utm_content=DAGnYCYNOHE&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">Design</a> by Vårddatahantering
-      <div class="video-info">
-        <h2>Video 1: Introduktion</h2>
-        <p><strong>Datum:</strong> 2025-05-10</p>
-        <p>En kort introduktion till projektet och varför det är viktigt för Sveriges regioner.</p>
-        <span class="tag">introduktion</span>
+  <div class="main-layout">
+    <aside class="sidebar" id="itemList">
+      <!-- Exempel: Video -->
+      <div class="sidebar-item" data-type="video" data-src="https://www.youtube.com/embed/9SYTfU5plrY">
+        <iframe src="https://www.youtube.com/embed/9SYTfU5plrY" allowfullscreen></iframe>
+        <span class="title">Video 1: Introduktion</span>
+        <span class="tag">Film</span>
       </div>
-    </div>
-
-    <div class="video-card" data-title="Datakvalitet" data-tags="kvalitet, metadata, standardisering">
-      <div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%;
- padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
- border-radius: 8px; will-change: transform;">
-  <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-    src="https://www.canva.com/design/DAGnYEv6iAE/pS_UX8yBN1CQ7JXAYuygkQ/watch?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
-  </iframe>
-</div>
-<a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGnYEv6iAE&#x2F;pS_UX8yBN1CQ7JXAYuygkQ&#x2F;watch?utm_content=DAGnYEv6iAE&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">Spagetti</a> by Vårddatahantering
-      <div class="video-info">
-        <h2>Video 2: Datakvalitet</h2>
-        <p><strong>Datum:</strong> 2025-05-14</p>
-        <p>Hur vi arbetar med att säkra hög datakvalitet genom gemensamma modeller och processer.</p>
-        <span class="tag">kvalitet</span>
+      <!-- Exempel: Rapport -->
+      <div class="sidebar-item" data-type="report" data-src="https://example.com/rapport1.pdf">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg" alt="PDF" />
+        <span class="title">Rapport 1: Datamodell</span>
+        <span class="tag">PDF</span>
       </div>
+    </aside>
+    <div class="content-display" id="viewer">
+      <iframe src="https://www.youtube.com/embed/9SYTfU5plrY" allowfullscreen></iframe>
     </div>
-
-    <div class="video-card" data-title="Användningsfall" data-tags="användning, forskning, AI">
-      <iframe src="https://sklse.sharepoint.com/teams/Strategifrgemensamvrddatahantering981/_layouts/15/embed.aspx?UniqueId=77ce0592-2404-4ba1-9fe6-93f2e289aa36&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Användarna.mp4"></iframe>
-      <div class="video-info">
-        <h2>Video 3: Användningsfall</h2>
-        <p><strong>Datum:</strong> 2025-05-18</p>
-        <p>Exempel på hur vårddata används i AI-tillämpningar och klinisk forskning.</p>
-        <span class="tag">forskning</span>
-      </div>
-    </div>
-
-    <div class="video-card" data-title="Nästa steg" data-tags="framtid, planering, roadmap">
-      <iframe src="https://sklse-my.sharepoint.com/personal/peder_hofman-bang_skr_se/_layouts/15/embed.aspx?UniqueId=04db326e-bf9a-4017-9e29-972c0c928bcc&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Fabric demo.mp4"></iframe>
-      <div class="video-info">
-        <h2>Video 4: Nästa steg</h2>
-        <p><strong>Datum:</strong> 2025-05-20</p>
-        <p>Vad som händer efter projektets slut – med fokus på kompetenscentrum och vårddatahubben.</p>
-        <span class="tag">framtid</span>
-      </div>
-    </div>
-  </main>
+  </div>
 
   <script>
-    // Filtrering med sökfält
-    const input = document.getElementById('searchInput');
-    input.addEventListener('input', () => {
-      const query = input.value.toLowerCase();
-      document.querySelectorAll('.video-card').forEach(card => {
-        const title = card.dataset.title.toLowerCase();
-        const tags = card.dataset.tags.toLowerCase();
-        card.style.display = (title.includes(query) || tags.includes(query)) ? 'block' : 'none';
+    const items = document.querySelectorAll('.sidebar-item');
+    const viewer = document.getElementById('viewer').querySelector('iframe');
+
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        viewer.src = item.dataset.src;
       });
     });
 
-    // Drag-and-drop sortering med Sortable.js och lokal lagring
-    const container = document.getElementById('videoContainer');
-    new Sortable(container, {
-      animation: 150,
-      ghostClass: 'sortable-ghost',
-      onEnd: () => {
-        localStorage.setItem('videoOrder', container.innerHTML);
-      }
-    });
+    const showVideos = document.getElementById('showVideos');
+    const showReports = document.getElementById('showReports');
 
-    // Inaktiverad återställning från localStorage för att tillåta ny HTML
-    // window.addEventListener('DOMContentLoaded', () => {
-    //   const savedOrder = localStorage.getItem('videoOrder');
-    //   if (savedOrder) container.innerHTML = savedOrder;
-    // });
+    function filterItems() {
+      items.forEach(item => {
+        const type = item.dataset.type;
+        const show = (type === 'video' && showVideos.checked) || (type === 'report' && showReports.checked);
+        item.style.display = show ? 'flex' : 'none';
+      });
+    }
+
+    showVideos.addEventListener('change', filterItems);
+    showReports.addEventListener('change', filterItems);
   </script>
 </body>
 </html>
