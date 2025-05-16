@@ -25,14 +25,16 @@
     "src": "rapporter/strategi.pdf",
     "title": "Strategirapport",
     "description": "Sammanfattning av strategi",
-    "tag": "PDF"
+    "tag": "PDF",
+    "preview": "bilder/strategi.png"
   },
   {
     "type": "report",
     "src": "rapporter/varde-projektforslag-varddatahubb-250516.pdf",
     "title": "Värde",
     "description": "Nyttor",
-    "tag": "PDF"
+    "tag": "PDF",
+    "preview": "bilder/varde-projektforslag.png"
   },
   {
     "type": "report",
