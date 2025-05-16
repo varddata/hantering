@@ -74,6 +74,9 @@
     <label for="tag">Tagg:</label>
     <input type="text" id="tag" required>
 
+    <label for="preview">Bildlänk (valfritt, t.ex. bilder/filnamn.png):</label>
+    <input type="text" id="preview">
+
     <button type="submit">Skapa JSON-post</button>
   </form>
 
@@ -95,6 +98,9 @@
         description: document.getElementById('description').value,
         tag: document.getElementById('tag').value
       };
+
+      const preview = document.getElementById('preview').value.trim();
+      if (preview !== '') item.preview = preview;
 
       const jsonString = JSON.stringify(item, null, 2);
       output.textContent = jsonString;
