@@ -28,12 +28,12 @@
     "tag": "PDF"
   },
   {
-  "type": "report",
-  "src": "https://github.com/varddata/hantering/blob/main/rapporter/V%C3%A4rde%20med%20projektf%C3%B6rslag%20f%C3%B6r%20v%C3%A5rddatahubb%20och%20kompetenscentrum%20250516.pdf",
-  "title": "Värde",
-  "description": "Nyttor",
-  "tag": "pdf"
-}
+    "type": "report",
+    "src": "rapporter/varde-projektforslag-varddatahubb-250516.pdf",
+    "title": "Värde",
+    "description": "Nyttor",
+    "tag": "PDF"
+  },
   {
     "type": "report",
     "src": "rapporter/datamodell.pdf",
