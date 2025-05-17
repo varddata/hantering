@@ -1,54 +1,51 @@
 [
-  {
-    "type": "video",
-    "src": "https://www.canva.com/design/DAGnYCYNOHE/7jb4vVU88fF1IOVaQTsz9Q/watch?embed",
-    "title": "Fokus sekundäranvändning i hälso- och sjukvården",
-    "description": "Förklarar skillnaden på primär- och sekundäranvändning och förklarar att projektet fokuserar på sekundäranvändningen (uppföljning och analys för innovation och AI, verksamhetsutveckling och beslutsfattande).",
-    "tag": "Data; sekundäranvändning"
-  },
-  {
-    "type": "video",
-    "src": "https://www.youtube.com/embed/OKl4v1GAnGI",
-    "title": "Datakvalitet",
-    "description": "Hur vi säkrar datakvalitet",
-    "tag": "Film"
-  },
-  {
-    "type": "video",
-    "src": "https://www.youtube.com/embed/y6120QOlsfU",
-    "title": "Användningsfall",
-    "description": "Exempel på tillämpningar",
-    "tag": "Film"
-  },
-  {
-    "type": "report",
-    "src": "rapporter/strategi.pdf",
-    "title": "Strategirapport",
-    "description": "Sammanfattning av strategi",
-    "tag": "PDF",
-    "preview": "bilder/strategi.png"
-  },
-  {
-    "type": "report",
-    "src": "rapporter/Delprojekt-3-Anvandningsfall.pdf",
-    "title": "Användningsfall delprojekt 3",
-    "description": "Prioriterat att analyser i vården",
-    "tag": "Data, Analys",
-    "preview": "bilder/Anvandningsfall.png"
-  },
-  {
-    "type": "report",
-    "src": "rapporter/varde-projektforslag-varddatahubb-250516.pdf",
-    "title": "Värde",
-    "description": "Nyttor",
-    "tag": "PDF",
-    "preview": "bilder/myndig.png"
-  },
-  {
-    "type": "report",
-    "src": "rapporter/datamodell.pdf",
-    "title": "Datamodell",
-    "description": "Teknisk beskrivning av modellen",
-    "tag": "PDF"
-  }
+    {
+        "src": "rapporter/Deliverable1-Inception-report.pdf",
+        "title": "Inceptionrapport",
+        "description": "Initial rapport för projektets uppstart",
+        "tag": "PDF",
+        "preview": "bilder/Inception.png"
+    },
+    {
+        "src": "rapporter/Delprojekt-1-Variabler.pdf",
+        "title": "Delprojekt 1: Variabler",
+        "description": "Definitioner och strukturering av variabler",
+        "tag": "PDF",
+        "preview": "bilder/Variabler.png"
+    },
+    {
+        "src": "rapporter/Delprojekt-2-dataformagor.pdf",
+        "title": "Delprojekt 2: Dataförmågor",
+        "description": "Beskrivning av datakapacitet och krav",
+        "tag": "PDF",
+        "preview": "bilder/Dataformagor.png"
+    },
+    {
+        "src": "rapporter/Delprojekt-3-Anvandningsfall.pdf",
+        "title": "Delprojekt 3: Användningsfall",
+        "description": "Exempel och analysbehov för vårdgenererad data",
+        "tag": "PDF",
+        "preview": "bilder/Anvandningsfall.png"
+    },
+    {
+        "src": "rapporter/Delprojekt-4-Varddatahubb.pdf",
+        "title": "Delprojekt 4: Vårddatahubb",
+        "description": "Arkitektur och förslag på gemensam hubb",
+        "tag": "PDF",
+        "preview": "bilder/Varddatahubb.png"
+    },
+    {
+        "src": "rapporter/Delprojekt-5-Kompetenscentrum.pdf",
+        "title": "Delprojekt 5: Kompetenscentrum",
+        "description": "Förslag på organisation och uppdrag",
+        "tag": "PDF",
+        "preview": "bilder/Kompetenscentrum.png"
+    },
+    {
+        "src": "rapporter/Leverabel2-Nulägesrapport.pdf",
+        "title": "Leverabel 2: Nulägesrapport",
+        "description": "Analys av nuläge i regionerna",
+        "tag": "PDF",
+        "preview": "bilder/Nulage.png"
+    }
 ]
