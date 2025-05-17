@@ -1,11 +1,11 @@
 [
   {
-  "type": "video",
-  "src": "https://www.canva.com/design/DAGnYCYNOHE/7jb4vVU88fF1IOVaQTsz9Q/watch?embed",
-  "title": "Fokus sekundäranvändning i hälso- och sjukvården",
-  "description": "Förklarar skillnaden på primär- och sekundäranvändning och förklarar att projektet fokuserar på sekundäranvändningen (uppföljning och analys för innovation och AI, verksamhetsutveckling och beslutsfattande).",
-  "tag": "Data; sekundäranvändning"
-},
+    "type": "video",
+    "src": "https://www.canva.com/design/DAGnYCYNOHE/7jb4vVU88fF1IOVaQTsz9Q/watch?embed",
+    "title": "Fokus sekundäranvändning i hälso- och sjukvården",
+    "description": "Förklarar skillnaden på primär- och sekundäranvändning och förklarar att projektet fokuserar på sekundäranvändningen (uppföljning och analys för innovation och AI, verksamhetsutveckling och beslutsfattande).",
+    "tag": "Data; sekundäranvändning"
+  },
   {
     "type": "video",
     "src": "https://www.youtube.com/embed/OKl4v1GAnGI",
@@ -29,13 +29,13 @@
     "preview": "bilder/strategi.png"
   },
   {
-  "type": "report",
-  "src": "https://github.com/varddata/hantering/blob/main/rapporter/Delprojekt-3-Anvandningsfall.pdf",
-  "title": "Användningsfall delprojekt 3",
-  "description": "Prioriterat att analyser i vården",
-  "tag": "Data, Analys",
-  "preview": "https://github.com/varddata/hantering/blob/main/bilder/Anvandningsfall.png"
-},
+    "type": "report",
+    "src": "rapporter/Delprojekt-3-Anvandningsfall.pdf",
+    "title": "Användningsfall delprojekt 3",
+    "description": "Prioriterat att analyser i vården",
+    "tag": "Data, Analys",
+    "preview": "bilder/Anvandningsfall.png"
+  },
   {
     "type": "report",
     "src": "rapporter/varde-projektforslag-varddatahubb-250516.pdf",
