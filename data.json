@@ -29,6 +29,14 @@
     "preview": "bilder/strategi.png"
   },
   {
+  "type": "report",
+  "src": "https://github.com/varddata/hantering/blob/main/rapporter/Delprojekt-3-Anvandningsfall.pdf",
+  "title": "Användningsfall delprojekt 3",
+  "description": "Prioriterat att analyser i vården",
+  "tag": "Data, Analys",
+  "preview": "https://github.com/varddata/hantering/blob/main/bilder/Anvandningsfall.png"
+},
+  {
     "type": "report",
     "src": "rapporter/varde-projektforslag-varddatahubb-250516.pdf",
     "title": "Värde",
