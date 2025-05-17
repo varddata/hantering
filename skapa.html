@@ -71,7 +71,7 @@
     <label for="description">Beskrivning:</label>
     <textarea id="description" rows="3" required></textarea>
 
-    <label for="tag">Tagg:</label>
+    <label for="tag">Taggar (separera med ; eller ,):</label>
     <input type="text" id="tag" required>
 
     <label for="preview">Bildlänk (valfritt, t.ex. bilder/filnamn.png):</label>
@@ -91,12 +91,15 @@
     form.addEventListener('submit', (e) => {
       e.preventDefault();
 
+      const tagsRaw = document.getElementById('tag').value;
+      const tagArray = tagsRaw.split(/[,;]+/).map(t => t.trim()).filter(Boolean);
+
       const item = {
         type: document.getElementById('type').value,
         src: document.getElementById('src').value,
         title: document.getElementById('title').value,
         description: document.getElementById('description').value,
-        tag: document.getElementById('tag').value
+        tag: tagArray
       };
 
       const preview = document.getElementById('preview').value.trim();
