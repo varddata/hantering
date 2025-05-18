@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Skapa JSON-poster</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -29,6 +30,8 @@
       font-family: inherit;
       font-size: 1rem;
       padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
     textarea {
       resize: vertical;
@@ -47,6 +50,8 @@
       color: white;
       border: none;
       cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
     }
     #copyBtn:hover {
       background-color: #2e6765;
@@ -58,24 +63,29 @@
   <form id="jsonForm">
     <label for="type">Typ:</label>
     <select id="type" required>
-      <option value="video">Film</option>
-      <option value="report">Rapport</option>
+      <option value="video">video</option>
+      <option value="report">report</option>
     </select>
 
-    <label for="src">Länk (YouTube/embed eller PDF-fil):</label>
-    <input type="url" id="src" required>
+    <label for="src">Src (embed-URL eller filväg):</label>
+    <input type="url" id="src" placeholder="https://..." required>
 
-    <label for="title">Titel:</label>
+    <label for="mp4">MP4 (valfritt, direktvideolänk för ljud):</label>
+    <input type="url" id="mp4" placeholder="https://...">
+
+    <label for="title">Title:</label>
     <input type="text" id="title" required>
 
-    <label for="description">Beskrivning:</label>
-    <textarea id="description" rows="3" required></textarea>
+    <label for="description">Description:</label>
+    <textarea id="description" rows="3"></textarea>
 
-    <label for="tag">Taggar (separera med ; eller ,):</label>
-    <input type="text" id="tag" required>
+    <label for="tag">Tag:</label>
+    <input type="text" id="tag" placeholder="t.ex. Demo">
 
-    <label for="preview">Bildlänk (valfritt, t.ex. bilder/filnamn.png):</label>
-    <input type="text" id="preview">
+    <label for="preview">Preview (valfritt, bild-URL):</label>
+    <input type="url" id="preview" placeholder="https://...">
+
+    <label><input type="checkbox" id="featured"> Featured (topp-lista)</label>
 
     <button type="submit">Skapa JSON-post</button>
   </form>
@@ -88,22 +98,36 @@
     const output = document.getElementById('output');
     const copyBtn = document.getElementById('copyBtn');
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', e => {
       e.preventDefault();
-
-      const tagsRaw = document.getElementById('tag').value;
-      const tagArray = tagsRaw.split(/[,;]+/).map(t => t.trim()).filter(Boolean);
 
       const item = {
         type: document.getElementById('type').value,
-        src: document.getElementById('src').value,
-        title: document.getElementById('title').value,
-        description: document.getElementById('description').value,
-        tag: tagArray
+        src: document.getElementById('src').value.trim(),
+        title: document.getElementById('title').value.trim()
       };
 
-      const preview = document.getElementById('preview').value.trim();
-      if (preview !== '') item.preview = preview;
+      const mp4 = document.getElementById('mp4').value.trim();
+      if (mp4) item.mp4 = mp4;
+
+      const desc = document.getElementById('description').value.trim();
+      if (desc) item.description = desc;
+
+      const tag = document.getElementById('tag').value.trim();
+      if (tag) item.tag = tag;
+
+      const prev = document.getElementById('preview').value.trim();
+      if (prev) item.preview = prev;
+
+      if (document.getElementById('featured').checked) {
+        item.featured = true;
+      }
+
+      // Slå ihop ?embed om det saknas på src
+      if (item.type === 'video' && !item.src.includes('embed')) {
+        const sep = item.src.includes('?') ? '&' : '?';
+        item.src = item.src + sep + 'embed';
+      }
 
       const jsonString = JSON.stringify(item, null, 2);
       output.textContent = jsonString;
@@ -111,8 +135,7 @@
     });
 
     copyBtn.addEventListener('click', () => {
-      const text = output.textContent;
-      navigator.clipboard.writeText(text).then(() => {
+      navigator.clipboard.writeText(output.textContent).then(() => {
         copyBtn.textContent = 'Kopierat!';
         setTimeout(() => copyBtn.textContent = 'Kopiera till urklipp', 2000);
       });
