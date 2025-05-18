@@ -2,7 +2,7 @@
 <html lang="sv">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Regiongemensam Vårddataprojekt</title>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
@@ -11,7 +11,7 @@
 <body>
   <header>
     <h1>Regiongemensam vårddatahantering</h1>
-    <p>Konkretisering av strategi för regiongemensam vårddatahantering.</p>
+    <p class="subtitle">Projektets förslag på hur en regiongemensam strategi för vårddata kan genomföras.</p>
   </header>
 
   <div class="disclaimer">
@@ -22,23 +22,42 @@
     </a>
   </div>
 
-  <div class="filter">
-    <label><input type="checkbox" id="showVideos" checked> Visa filmer</label>
-    <label><input type="checkbox" id="showReports" checked> Visa rapporter</label>
+  <div class="controls">
+    <div class="filter">
+      <label><input type="checkbox" id="showVideos" checked> Visa filmer</label>
+      <label><input type="checkbox" id="showReports" checked> Visa rapporter</label>
+    </div>
+    <div class="sort">
+      <label for="sortOrder">Sortera:</label>
+      <select id="sortOrder">
+        <option value="default">Som i data</option>
+        <option value="date">Efter datum</option>
+        <option value="title">Efter namn</option>
+      </select>
+    </div>
   </div>
 
   <div class="grid-layout">
-    <!-- Topp-lista för utvalda filmer -->
-    <section class="top-list" id="featuredList"></section>
+    <!-- Utvalda filmer -->
+    <section class="top-list-container">
+      <h2>Utvalda filmer</h2>
+      <div class="top-list" id="featuredList"></div>
+    </section>
 
-    <!-- Vänsterlista: alla filmer -->
-    <aside class="sidebar left" id="itemList"></aside>
+    <!-- Övriga filmer -->
+    <aside class="sidebar left">
+      <h2>Övriga filmer</h2>
+      <div id="itemList"></div>
+    </aside>
 
-    <!-- Huvudvisare -->
+    <!-- Visningsfönster -->
     <main class="content-display" id="viewer"></main>
 
-    <!-- Högerlista: rapporter/pdf -->
-    <aside class="sidebar right" id="reportList"></aside>
+    <!-- Rapporter -->
+    <aside class="sidebar right">
+      <h2>Rapporter</h2>
+      <div id="reportList"></div>
+    </aside>
   </div>
 </body>
 </html>
