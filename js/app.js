@@ -31,7 +31,7 @@ async function main() {
 
     let preview;
     if (item.type === 'video') {
-      const sep = item.src.includes('?') ? '&' : '?';
+      const sep   = item.src.includes('?') ? '&' : '?';
       const embed = item.src.includes('embed')
         ? item.src
         : item.src + sep + 'embed';
@@ -48,21 +48,13 @@ async function main() {
         <span class="title">${item.title}</span>
         <span class="description">${item.description||''}</span>
         <span class="tag">${item.tag}</span>
-        <button class="open-new">
-          <span class="btn-text">Öppna i nytt fönster för ljud</span>
-          <span class="btn-icon">🔗</span>
-        </button>
       </div>`;
 
-    div.addEventListener('click', () => showInViewer(item));
+    div.addEventListener('click', () => selectItem(div, item));
     div.addEventListener('keydown', e => {
-      if (e.key==='Enter'||e.key===' ') showInViewer(item);
+      if (e.key==='Enter'||e.key===' ') selectItem(div, item);
     });
-    div.querySelector('.open-new').addEventListener('click', e => {
-      e.stopPropagation();
-      pauseCurrent();
-      window.open(item.mp4||item.src,'_blank','noopener');
-    });
+
     return div;
   }
 
@@ -76,77 +68,85 @@ async function main() {
   }
 
   function render() {
-    // filtrera & sortera
     let featured = items.filter(i=>i.featured);
     if (!featured.length) featured = items.filter(i=>i.type==='video').slice(0,3);
 
     let reports = items.filter(i=>i.type==='report');
     let others  = items.filter(i=>i.type==='video' && !featured.includes(i));
 
-    sortItems(featured);
-    sortItems(others);
-    sortItems(reports);
+    sortItems(featured); sortItems(others); sortItems(reports);
 
-    // clear
     featuredList.innerHTML='';
     container.innerHTML='';
     reportList.innerHTML='';
 
-    // rendera
     featured.forEach(i=>featuredList.appendChild(makeItem(i)));
     others.forEach(i=>container.appendChild(makeItem(i)));
     reports.forEach(i=>reportList.appendChild(makeItem(i)));
 
-    // visa första
     const first = featured[0]||others[0];
-    if (first) showInViewer(first);
+    if (first) selectItem(featuredList.firstChild||container.firstChild, first);
   }
 
-  function showInViewer(item) {
+  function selectItem(div, item) {
     pauseCurrent();
-    viewer.innerHTML = '';
+    viewer.innerHTML='';
+
     if (item.mp4) {
       const v = document.createElement('video');
       v.controls=true; v.playsInline=true; v.src=item.mp4;
       viewer.appendChild(v);
     } else {
-      const iframe=document.createElement('iframe');
-      const sep=item.src.includes('?')?'&':'?';
-      iframe.src=item.src.includes('embed')?item.src:item.src+sep+'embed';
+      const iframe = document.createElement('iframe');
+      const sep = item.src.includes('?')?'&':'?';
+      iframe.src = item.src.includes('embed')
+        ? item.src
+        : item.src + sep + 'embed';
       iframe.allow='autoplay; fullscreen';
       iframe.allowFullscreen=true;
       iframe.loading='lazy';
       iframe.title=item.title;
       viewer.appendChild(iframe);
     }
-    const btn=document.createElement('button');
-    btn.textContent='🔗';
-    btn.className='open-new btn-icon';
-    btn.style.position='absolute';
-    btn.style.top='1rem'; btn.style.right='1rem';
-    btn.addEventListener('click',e=>{e.stopPropagation();pauseCurrent();window.open(item.mp4||item.src,'_blank','noopener');});
-    viewer.appendChild(btn);
+
+    // mobil: klick i viewer öppnar nytt fönster
+    if (window.innerWidth <= 900) {
+      viewer.onclick = () => window.open(item.mp4||item.src,'_blank','noopener');
+    } else {
+      viewer.onclick = null;
+    }
+
+    // scrolla och lyft aktiv i sidlista på mobilen
+    if (window.innerWidth <= 900) {
+      div.parentNode.prepend(div);
+      div.scrollIntoView({behavior:'smooth',block:'start'});
+      viewer.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+
+    // markera aktiv
+    document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.remove('active'));
+    div.classList.add('active');
   }
 
-  function pauseCurrent(){
-    const v=viewer.querySelector('video'); if(v) v.pause();
-    const i=viewer.querySelector('iframe'); if(i) i.src='';
+  function pauseCurrent() {
+    const v = viewer.querySelector('video'); if(v) v.pause();
+    const i = viewer.querySelector('iframe'); if(i) i.src='';
   }
 
-  function filterAndRender(){
+  function filterAndRender() {
     render();
     document.querySelectorAll('.sidebar-item').forEach(div=>{
-      const t=div.dataset.type;
-      const keep = (t==='video'&&showVideos.checked) || (t==='report'&&showReports.checked) || div.closest('.top-list')!==null;
+      const t = div.dataset.type;
+      const keep = (t==='video'&&showVideos.checked)
+                || (t==='report'&&showReports.checked)
+                || div.closest('.top-list')!==null;
       div.classList.toggle('hidden',!keep);
     });
   }
 
-  // koppla events
   showVideos.addEventListener('change', filterAndRender);
   showReports.addEventListener('change', filterAndRender);
   sortOrder.addEventListener('change', filterAndRender);
 
-  // initial render
   filterAndRender();
 }
