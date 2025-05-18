@@ -8,10 +8,11 @@
   --filter-height: 3rem;
 }
 
-/* Grund */
+/* Global reset */
 * {
   box-sizing: border-box;
 }
+
 body {
   font-family: var(--env-font-family);
   margin: 0;
@@ -20,6 +21,7 @@ body {
   color: var(--env-font-color);
   font-size: 16px;
 }
+
 header {
   background-color: var(--env-header-background);
   color: white;
@@ -27,10 +29,12 @@ header {
   text-align: center;
   height: var(--header-height);
 }
+
 h1 {
   margin: 0;
   font-weight: 600;
 }
+
 .disclaimer {
   background-color: #ffffff;
   color: #222222;
@@ -41,10 +45,12 @@ h1 {
   font-size: 0.95rem;
   text-align: left;
 }
+
 .disclaimer a {
   color: #004c6c;
   text-decoration: underline;
 }
+
 .filter {
   display: flex;
   justify-content: center;
@@ -52,10 +58,12 @@ h1 {
   padding: 0.75rem 1rem;
   height: var(--filter-height);
 }
+
 .main-layout {
   display: flex;
   gap: 1rem;
 }
+
 .sidebar {
   width: 320px;
   height: calc(100vh - var(--header-height) - var(--filter-height));
@@ -63,6 +71,7 @@ h1 {
   border-right: 1px solid #ccc;
   padding: 1rem;
 }
+
 .sidebar-item {
   display: flex;
   gap: 1rem;
@@ -70,25 +79,33 @@ h1 {
   cursor: pointer;
   align-items: center;
 }
-.sidebar-item img {
+
+.sidebar-item img,
+.sidebar-item iframe {
   width: 66%;
   max-width: 140px;
   border-radius: 4px;
+  aspect-ratio: 16 / 9;
+  border: none;
 }
+
 .info {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+
 .title {
   font-size: 0.95rem;
   font-weight: 600;
   color: #004c6c;
 }
+
 .description {
   font-size: 0.85rem;
   margin-top: 0.25rem;
 }
+
 .tag {
   display: inline-block;
   background-color: #e0f0f8;
@@ -98,19 +115,26 @@ h1 {
   font-size: 0.75rem;
   margin-top: 0.3rem;
 }
+
 .content-display {
+  position: relative;
   flex: 1;
-  padding: 1rem;
-  max-width: 50%;
+  padding-top: 56.25%; /* 16:9 ratio */
 }
+
 .content-display iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: 100%;
   border: none;
 }
+
 .hidden {
   display: none !important;
 }
+
 @media (max-width: 900px) {
   .main-layout {
     display: grid;
