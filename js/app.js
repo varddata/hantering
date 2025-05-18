@@ -29,13 +29,18 @@ async function main() {
     div.dataset.type = item.type;
     div.dataset.src  = item.src;
 
-    // preview som bild
-    let preview = item.preview
-      ? `<img src="${item.preview}" alt="Preview" loading="lazy">`
-      : `<img src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg" alt="PDF" loading="lazy">`;
+    // Visa alltid preview-bild om den finns
+    let previewHtml;
+    if (item.preview) {
+      previewHtml = `<img src="${item.preview}" alt="Förhandsvisning" loading="lazy">`;
+    } else {
+      // PDF-fallback
+      previewHtml = `<img src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg"
+                        alt="PDF" loading="lazy">`;
+    }
 
     div.innerHTML = `
-      ${preview}
+      ${previewHtml}
       <div class="info">
         <span class="title">${item.title}</span>
         <span class="description">${item.description||''}</span>
@@ -88,44 +93,39 @@ async function main() {
     pauseCurrent();
     viewer.innerHTML = '';
 
-    // build embed
+    // Embed in huvudvisaren
     if (item.mp4) {
       const v = document.createElement('video');
       v.controls=true; v.playsInline=true; v.src=item.mp4;
       viewer.appendChild(v);
     } else {
       const iframe = document.createElement('iframe');
-      const sep = item.src.includes('?') ? '&' : '?';
-      iframe.src = item.src.includes('embed')
-        ? item.src
-        : item.src + sep + 'embed';
-      iframe.allow = 'autoplay; fullscreen';
-      iframe.allowFullscreen = true;
-      iframe.loading = 'lazy';
-      iframe.title = item.title;
+      const sep = item.src.includes('?')?'&':'?';
+      iframe.src = item.src.includes('embed')?item.src:item.src+sep+'embed';
+      iframe.allow='autoplay; fullscreen';
+      iframe.allowFullscreen=true;
+      iframe.loading='lazy';
+      iframe.title=item.title;
       viewer.appendChild(iframe);
     }
 
-    // på mobil/padda: overlay-länk som öppnar i nytt fönster
+    // Mobil/padda: overlay-länk för nytt fönster
     if (window.innerWidth <= 900) {
       const link = document.createElement('a');
-      link.href = item.mp4 || item.src;
+      link.href   = item.mp4||item.src;
       link.target = '_blank';
-      link.rel = 'noopener';
-      link.style.position = 'absolute';
-      link.style.top = 0;
-      link.style.left = 0;
-      link.style.width = '100%';
-      link.style.height = '100%';
-      link.style.zIndex = 10;
+      link.rel    = 'noopener';
+      Object.assign(link.style, {
+        position:'absolute', top:0, left:0, width:'100%', height:'100%', zIndex:10
+      });
       viewer.appendChild(link);
     }
 
-    // markera aktiv
+    // Markera aktiv
     document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.remove('active'));
     div.classList.add('active');
 
-    // på mobil: flytta upp i listan och scrolla
+    // Mobilt scroll: flytta upp och scrolla in
     if (window.innerWidth <= 900) {
       const parent = div.parentNode;
       parent.prepend(div);
@@ -136,14 +136,14 @@ async function main() {
 
   function pauseCurrent() {
     const v = viewer.querySelector('video'); if(v) v.pause();
-    const i = viewer.querySelector('iframe'); if(i) i.src = '';
+    const i = viewer.querySelector('iframe'); if(i) i.src='';
   }
 
   function filterAndRender() {
     render();
     document.querySelectorAll('.sidebar-item').forEach(div=>{
       const t = div.dataset.type;
-      const isTop = div.parentNode.id === 'featuredList';
+      const isTop = div.parentNode.id==='featuredList';
       const keep = isTop ||
                    (t==='video' && showVideos.checked) ||
                    (t==='report' && showReports.checked);
