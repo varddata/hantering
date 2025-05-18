@@ -64,16 +64,19 @@
       border-left: 4px solid #377D7A;
     }
     .sidebar-item iframe, .sidebar-item img {
-      width: 50%;
-      max-width: 180px;
+      width: 66%;
+      max-width: 140px;
       border-radius: 4px;
     }
     .info {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
     .title {
-      font-size: 1rem;
-      font-weight: bold;
+      font-size: 0.95rem;
+      font-weight: 600;
       color: #004c6c;
     }
     .description, .tag, .status, .date {
@@ -86,6 +89,7 @@
       border-radius: 4px;
       display: inline-block;
       margin-top: 0.3rem;
+      width: fit-content;
     }
     .open-new {
       display: inline-block;
@@ -96,30 +100,21 @@
       text-decoration: underline;
     }
     .content-display {
-      max-width: 800px;
       flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 2rem 1rem;
+      padding: 1rem;
+      max-width: 50%;
     }
-    .content-display iframe, .content-display embed {
+    .content-display iframe {
       width: 100%;
-      height: 80vh;
+      aspect-ratio: 16 / 9;
       border: none;
     }
-    @media (max-width: 768px) {
+    @media screen and (max-width: 900px) {
       .main-layout {
         flex-direction: column;
-        align-items: center;
-      }
-      .sidebar {
-        width: 90%;
-        border-right: none;
-        border-bottom: 1px solid #ccc;
       }
       .content-display {
-        padding: 1rem;
+        max-width: 100%;
       }
     }
   </style>
@@ -162,19 +157,11 @@
     let currentActiveSrc = null;
     function createItem(item) {
       const container = document.getElementById('itemList');
-      const viewerContainer = document.getElementById('viewer');
-      const viewer = viewerContainer.querySelector('iframe');
+      const viewer = document.getElementById('viewer').querySelector('iframe');
       const div = document.createElement('div');
       div.className = 'sidebar-item';
       div.dataset.type = item.type;
       div.dataset.src = item.src;
-      div.dataset.title = item.title.toLowerCase();
-      div.dataset.description = item.description.toLowerCase();
-      div.dataset.tags = (Array.isArray(item.tag) ? item.tag.join(' ') : item.tag).toLowerCase();
-      div.dataset.date = item.date || '';
-      div.dataset.status = item.status || '';
-
-      const statusColor = item.status === 'Ny' ? '#4caf50' : item.status === 'Utkast' ? '#ff9800' : '#999';
 
       const preview = item.preview
         ? `<img src="${item.preview}" alt="Förhandsvisning">`
@@ -182,96 +169,49 @@
           ? `<iframe src="${item.src}" allowfullscreen></iframe>`
           : `<img src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg" alt="PDF">`;
 
-      const openNewTab = item.type === 'report' || item.type === 'video';
-
       div.innerHTML = `
         ${preview}
         <div class="info">
           <span class="title">${item.title}</span>
-          ${item.date ? `<div class="date">${item.date}</div>` : ''}
           <span class="description">${item.description}</span>
-          ${item.status ? `<div class="status" style="color:${statusColor};font-weight:bold;">${item.status}</div>` : ''}
-          ${Array.isArray(item.tag) ? item.tag.map(tag => `<span class="tag">${tag}</span>`).join('') : `<span class="tag">${item.tag}</span>`}
-          <div class="open-new" onclick="window.open('${item.src}', '_blank')">Öppna i nytt fönster</div>
+          <span class="tag">${item.tag}</span>
         </div>
       `;
 
       div.addEventListener('click', () => {
-        const isPDF = item.src.endsWith('.pdf');
-        const isCanva = item.src.includes('canva.com');
-
-        if (isPDF) {
-          viewerContainer.innerHTML = `<embed src="${item.src}#toolbar=0&navpanes=0&scrollbar=1" type="application/pdf">`;
-        } else {
-          viewerContainer.innerHTML = `<iframe src="${item.src}" allowfullscreen></iframe>`;
-        }
-
-        document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
-        div.classList.add('active');
-        const parent = div.parentElement;
-        const first = parent.firstChild;
-        if (first !== div) {
-          parent.removeChild(div);
-          parent.insertBefore(div, first);
-        }
+        viewer.src = item.src;
       });
 
       container.appendChild(div);
     }
 
     async function loadContent() {
-      const response = await fetch(`data.json?t=${Date.now()}`);
+      const response = await fetch('data.json');
       const content = await response.json();
       const container = document.getElementById('itemList');
       const viewer = document.getElementById('viewer').querySelector('iframe');
-      const sortMode = document.getElementById('sortSelect')?.value || 'default';
-
-      let sortedContent = [...content];
-      if (sortMode === 'date') {
-        sortedContent.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-      } else if (sortMode === 'status') {
-        const order = { 'Ny': 1, 'Utkast': 2, 'Publicerad': 3 };
-        sortedContent.sort((a, b) => (order[a.status] || 99) - (order[b.status] || 99));
-      }
 
       container.innerHTML = '';
-      sortedContent.forEach(item => createItem(item));
-      updateCount();
+
+      content.forEach(item => createItem(item));
+
+      viewer.src = content.find(c => c.type === 'video')?.src || '';
     }
 
-    function resetOrder() {
-      if (confirm("Vill du återställa till ursprunglig ordning?")) {
-        location.reload();
-      }
-    }
+    document.getElementById('showVideos').addEventListener('change', filterItems);
+    document.getElementById('showReports').addEventListener('change', filterItems);
 
-    function updateCount(count = null) {
-      const total = document.querySelectorAll('.sidebar-item').length;
-      const visible = count !== null ? count : total;
-      document.getElementById('resultCount').textContent = `Visar ${visible} av ${total} poster`;
-    }
-
-    function filterAll() {
+    function filterItems() {
       const showVideos = document.getElementById('showVideos').checked;
       const showReports = document.getElementById('showReports').checked;
-      const search = document.getElementById('searchInput').value.toLowerCase();
+      const items = document.querySelectorAll('.sidebar-item');
 
-      let visibleCount = 0;
-      document.querySelectorAll('.sidebar-item').forEach(item => {
+      items.forEach(item => {
         const type = item.dataset.type;
-        const matchType = (type === 'video' && showVideos) || (type === 'report' && showReports);
-        const textMatch = item.dataset.title.includes(search) || item.dataset.description.includes(search) || item.dataset.tags.includes(search);
-        const show = matchType && textMatch;
-        item.style.display = show ? 'flex' : 'none';
-        if (show) visibleCount++;
+        const visible = (type === 'video' && showVideos) || (type === 'report' && showReports);
+        item.style.display = visible ? 'flex' : 'none';
       });
-
-      updateCount(visibleCount);
     }
-
-    document.getElementById('searchInput').addEventListener('input', filterAll);
-    document.getElementById('showVideos').addEventListener('change', filterAll);
-    document.getElementById('showReports').addEventListener('change', filterAll);
 
     loadContent();
   </script>
