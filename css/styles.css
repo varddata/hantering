@@ -1,13 +1,13 @@
 /* css/styles.css */
 :root {
-  --font: 'Source Sans Pro', sans-serif;
-  --text-color: #222222;
-  --bg-color: #ffffff;
-  --header-bg: #377D7A;
+  --env-font-family: 'Source Sans Pro', sans-serif;
+  --env-font-color: #222222;
+  --env-background-color: #ffffff;
+  --env-header-background: #377D7A;
   --header-height: 4rem;
   --filter-height: 3rem;
   --sidebar-width: 300px;
-  --content-max-width: 800px; /* här bestämmer du maxbredden på videon */
+  --content-max-width: 800px; /* maxbredd för videofönstret */
   --gap: 1rem;
   --border-color: #ccc;
 }
@@ -19,13 +19,13 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: var(--font);
-  color: var(--text-color);
-  background: var(--bg-color);
+  font-family: var(--env-font-family);
+  color: var(--env-font-color);
+  background: var(--env-background-color);
 }
 
 header {
-  background: var(--header-bg);
+  background: var(--env-header-background);
   color: #fff;
   padding: 1rem 2rem;
   text-align: center;
@@ -55,7 +55,8 @@ header {
   flex-wrap: wrap;
   padding: 0 1rem 1rem;
 }
-.filter label, .sort label {
+.filter label,
+.sort label {
   margin-right: 0.5rem;
 }
 .sort select {
@@ -65,7 +66,7 @@ header {
 
 .grid-layout {
   display: grid;
-  /* max-bredd = sidebar + content + sidebar */
+  /* max-bredd på desktop */
   max-width: calc(var(--sidebar-width) * 2 + var(--content-max-width));
   margin: 0 auto;
   grid-template-areas:
@@ -90,8 +91,12 @@ header {
   padding: 0.5rem 0;
 }
 
-.sidebar.left { grid-area: left; }
-.sidebar.right { grid-area: right; }
+.sidebar.left {
+  grid-area: left;
+}
+.sidebar.right {
+  grid-area: right;
+}
 
 .content-display {
   grid-area: content;
@@ -101,8 +106,6 @@ header {
   margin: 0 auto;
   overflow: hidden;
 }
-
-/* Gör videon responsiv och max-höjd så den inte sticker ut */
 .content-display iframe,
 .content-display video {
   width: 100%;
@@ -139,7 +142,6 @@ header {
   margin-bottom: 1rem;
   align-items: center;
 }
-
 .sidebar-item img {
   width: 80px;
   height: 45px;
@@ -147,8 +149,6 @@ header {
   border-radius: 4px;
   flex-shrink: 0;
 }
-
-/* overlay-symbol ↗ */
 .sidebar-item::after {
   content: "↗";
   position: absolute;
@@ -186,8 +186,11 @@ header {
   display: none !important;
 }
 
+/* === MOBIL / PADD === */
 @media (max-width: 900px) {
   .grid-layout {
+    /* ta bort max-width på mobilen */
+    max-width: 100%;
     grid-template-areas:
       "top"
       "content"
@@ -200,7 +203,9 @@ header {
     position: sticky;
     top: 0;
     z-index: 10;
-    background: var(--bg-color);
+    background: var(--env-background-color);
+    max-width: 100%;
+    margin: 0;  /* fyll bredden */
   }
   .content-display iframe,
   .content-display video {
