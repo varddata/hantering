@@ -6,7 +6,8 @@
     "description": "Förklarar skillnaden på primär- och sekundäranvändning och förklarar att projektet fokuserar på sekundäranvändningen.",
     "tag": [
       "Data",
-      "Sekundäranvändning"
+      "Sekundäranvändning",
+      "preview": "bilder/Sekundär.JPG"
     ],
     "status": "Ny",
     "date": "2025-05-18"
@@ -17,6 +18,7 @@
     "title": "Thanks to EU",
     "description": "Acknowledgement to support from TSI",
     "tag": "EU",
+    "preview": "bilder/Thanks.JPG",
     "featured": true
   },
   {
@@ -32,14 +34,16 @@
     "src": "https://www.canva.com/design/DAGn0JK7fdE/2FzCAH_VSRbi4Fqjj2X4uQ/watch?embed",
     "title": "15. Nästa steg",
     "description": "Vad projektet har rekommenderat kommer hända efter projektslut.",
-    "tag": "Genomförande"
+    "tag": "Genomförande",
+    "preview": "bilder/Nästa steg.JPG"
   },
   {
     "type": "video",
     "src": "https://www.canva.com/design/DAGnz9MZMPY/Hh3zj8uASt-9vAO58nUkFw/watch?embed",
     "title": "14. Sammanfattning",
     "description": "Sammanfattar nyttorna med projektet",
-    "tag": "Nytta"
+    "tag": "Nytta",
+    "preview": "bilder/Sammanfattning.JPG"
   },
   {
     "type": "video",
@@ -47,6 +51,7 @@
     "title": "13 b Fabric demo Eng",
     "description": "Test environment in MS Fabric.",
     "tag": "",
+    "preview": "bilder/Fabric eng.JPG",
     "featured": true
   },
   {
@@ -54,84 +59,96 @@
     "src": "https://www.canva.com/design/DAGnvk3LxcA/-TrtyUb4HNcuITwQlT5WWg/watch?embed",
     "title": "13 a Fabric demo Swe",
     "description": "Projektet har skapat en testmiljö i MS Fabric som visar hur datahanteringen kan se ut i vårddatahubben.",
-    "tag": "Vårddata"
+    "tag": "Vårddata",
+    "preview": "bilder/Fabric sve.JPG"
   },
   {
     "type": "video",
     "src": "https://www.canva.com/design/DAGnzYqBgxM/2wrxe3bzfQrTlZrafNi-8g/watch?embed",
     "title": "12. Secure Process Environment",
     "description": "Så här fungerar en säker processmiljö.",
-    "tag": "Säkerhet, data"
+    "tag": "Säkerhet, data",
+    "preview": "bilder/SPE.JPG"
   },
   {
     "type": "video",
     "src": "https://www.canva.com/design/DAGnzWUFy-s/5RxA40Z7x8_Uy6ZLm8bPAQ/watch?embed",
     "title": "11. Användningsfall 2",
     "description": "Hur analys av en vårdprocess kan gå till i hubben.",
-    "tag": "Hubb, Kompetenscentrum, Vårddata"
+    "tag": "Hubb, Kompetenscentrum, Vårddata",
+    "preview": "bilder/Anv 2.JPG"
   },
   {
     "type": "video",
     "src": "https://www.canva.com/design/DAGnzTb7Yi8/63Lt_ATYN5R00cQwXnR-wA/watch?embed",
     "title": "10. Användningsfall 1",
     "description": "Beskrivning av det första fallet: effektivare överföring till register",
-    "tag": "Vårddata, Register"
+    "tag": "Vårddata, Register",
+    "preview": "bilder/Anv 1.JPG"
   },
   {
     "type": "video",
     "src": "https://www.canva.com/design/DAGnzU2fBsc/sdcF_IjUAdms-C_KaF4UAg/watch?embed",
     "title": "9. Pseudonymisering",
     "description": "Exempel på hur pseudonymisering kan gå till i hubben.",
-    "tag": "Pseudonymisering, vårddata"
+    "tag": "Pseudonymisering, vårddata",
+    "preview": "bilder/Pseudo.JPG"
   },
   {
     "type": "video",
     "src": "https://www.canva.com/design/DAGnzd4D8BI/tUgdxG2YgcifZyq_0caQ0w/watch?embed",
     "title": "8. Metadata",
     "description": "Vikten av grundlig metadatahantering",
-    "tag": "Metadata"
+    "tag": "Metadata",
+    "preview": "bilder/Metadata.JPG"
   },
   {
     "type": "video",
     "src": "https://www.canva.com/design/DAGnzDUUwzs/4TNeG1RVcHSUWCvPE6a8pg/watch?embed",
     "title": "7. Användningsfall",
     "description": "Introduktion till två användningsfall som kan hanteras av vårddatahubben och kompetenscentrumet",
-    "tag": ""
+    "tag": "",
+    "preview": "bilder/Anvandningsfall.JPG"
   },
   {
     "type": "video",
     "src": "https://www.canva.com/design/DAGnzPVpTo4/GGUiGVp9aC_hVXbly0riBA/watch?embed",
     "title": "6. Lösningen",
     "description": "Övergripande illustration av projektets förslag till lösning",
-    "tag": "Datahantering"
+    "tag": "Datahantering",
+    "preview": "bilder/Lösning.JPG"
   },
   {
     "type": "video",
     "src": "https://www.canva.com/design/DAGnzAyEqok/aBE1U_TqDrPSpmGdwDFfEQ/watch?embed",
     "title": "5. Datahubb",
     "description": "Fördjupning i vårddatahubbens funktion",
-    "tag": "Vårddatahubb"
+    "tag": "Vårddatahubb",
+    "preview": "bilder/Vårddatahubb.JPG"
   },
   {
     "type": "video",
     "src": "https://www.canva.com/design/DAGnzFwhEqw/AUPVVNLBwPsPkgZUUP9SVg/watch?embed",
     "title": "4. Mognad och ramverk",
     "description": "Vikten av att regionerna påbörjar ett eget arbete mot en gemensam vårddatahantering",
-    "tag": "Ramverk, Datahantering"
+    "tag": "Ramverk, Datahantering",
+    "preview": "bilder/Ramverk.JPG"
   },
   {
     "type": "video",
     "src": "https://www.canva.com/design/DAGnzHdwWCc/c6ShnYfx7FEfIARfTy5PhQ/watch?embed",
     "title": "3. Dataanvändning",
     "description": "Hur vill vi använda data i vården?",
-    "tag": "Analys"
+    "tag": "Analys",
+    "preview": "bilder/Dataanvändning.JPG"
   },
   {
     "type": "video",
     "src": "https://www.canva.com/design/DAGnYEv6iAE/pS_UX8yBN1CQ7JXAYuygkQ/watch?embed",
     "title": "2. Utmaningen",
     "description": "Utmaningen ute i regionerna som projektet utgick ifrån vid uppstart.",
-    "tag": "Datautmaningar"
+    "tag": "Datautmaningar",
+    "preview": "bilder/Utmaningar.JPG"
   },
   {
     "type": "video",
@@ -139,6 +156,7 @@
     "title": "0. Vårddatahantering, hela filmen",
     "description": "Sammanslagning av alla kortfilmer.",
     "tag": "Projektet",
+    "preview": "bilder/Hela.JPG",
     "featured": true
   },
   {
