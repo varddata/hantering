@@ -27,13 +27,18 @@
     <label><input type="checkbox" id="showReports" checked> Visa rapporter</label>
   </div>
 
-  <div class="main-layout">
-    <aside class="sidebar" id="itemList">
-      <!-- Innehåll laddas från data.json -->
-    </aside>
-    <main class="content-display" id="viewer">
-      <!-- Dynamic content -->
-    </main>
+  <div class="grid-layout">
+    <!-- Topp-lista för utvalda filmer -->
+    <section class="top-list" id="featuredList"></section>
+
+    <!-- Vänsterlista: alla filmer -->
+    <aside class="sidebar left" id="itemList"></aside>
+
+    <!-- Huvudvisare -->
+    <main class="content-display" id="viewer"></main>
+
+    <!-- Högerlista: rapporter/pdf -->
+    <aside class="sidebar right" id="reportList"></aside>
   </div>
 </body>
 </html>
