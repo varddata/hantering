@@ -19,6 +19,20 @@
       padding: 1rem 2rem;
       text-align: center;
     }
+    .disclaimer {
+      background-color: #ffffff;
+      color: #222222;
+      border-left: 5px solid #FFA500;
+      margin: 1rem auto;
+      padding: 1rem;
+      max-width: 960px;
+      font-size: 0.95rem;
+      text-align: left;
+    }
+    .disclaimer a {
+      color: #004c6c;
+      text-decoration: underline;
+    }
     .filter, .search-bar, .search-info {
       text-align: center;
       margin: 1rem;
@@ -40,7 +54,7 @@
       gap: 1rem;
       margin-bottom: 1rem;
       align-items: center;
-      cursor: move;
+      cursor: pointer;
       border-left: 4px solid transparent;
       padding-left: 4px;
     }
@@ -72,6 +86,14 @@
       display: inline-block;
       margin-top: 0.3rem;
     }
+    .open-new {
+      display: inline-block;
+      font-size: 0.75rem;
+      margin-top: 4px;
+      color: #004c6c;
+      cursor: pointer;
+      text-decoration: underline;
+    }
     .content-display {
       max-width: 800px;
       flex: 1;
@@ -92,6 +114,10 @@
     <h1>Regiongemensam vårddatahantering</h1>
     <p>Kortfilmer och rapporter från projektet</p>
   </header>
+
+  <div class="disclaimer">
+    <strong>OBS:</strong> På denna sida återfinns test- och betaleveranser från projektet. De officiella resultaten finns här: <a href="https://kunskapsstyrningvard.se/kunskapsstyrningvard/datauppfoljningochanalys/regiongemensamvarddatahantering.89146.html" target="_blank" rel="noopener">kunskapsstyrningvard.se</a>
+  </div>
 
   <div class="filter">
     <label><input type="checkbox" id="showVideos" checked> Visa filmer</label>
@@ -133,7 +159,6 @@
       div.dataset.status = item.status || '';
 
       const statusColor = item.status === 'Ny' ? '#4caf50' : item.status === 'Utkast' ? '#ff9800' : '#999';
-      const openInNewTab = item.openInNewTab && item.type === 'report';
 
       const preview = item.preview ? `<img src="${item.preview}" alt="Förhandsvisning">` : item.type === 'video' ? `<iframe src="${item.src}" allowfullscreen></iframe>` : `<img src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg" alt="PDF">`;
 
@@ -145,17 +170,19 @@
           <span class="description">${item.description}</span>
           ${item.status ? `<div class="status" style="color:${statusColor};font-weight:bold;">${item.status}</div>` : ''}
           ${Array.isArray(item.tag) ? item.tag.map(tag => `<span class="tag">${tag}</span>`).join('') : `<span class="tag">${item.tag}</span>`}
+          ${item.type === 'report' ? `<div class="open-new" onclick="window.open('${item.src}', '_blank')">Öppna i nytt fönster</div>` : ''}
         </div>
       `;
 
       div.addEventListener('click', () => {
-        if (openInNewTab) {
-          window.open(item.src, '_blank');
-        } else {
-          viewer.src = item.src;
-          document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
-          div.classList.add('active');
-          currentActiveSrc = item.src;
+        viewer.src = item.src;
+        document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+        div.classList.add('active');
+        const parent = div.parentElement;
+        const first = parent.firstChild;
+        if (first !== div) {
+          parent.removeChild(div);
+          parent.insertBefore(div, first);
         }
       });
 
@@ -179,30 +206,11 @@
 
       container.innerHTML = '';
       sortedContent.forEach(item => createItem(item));
-
-      new Sortable(container, {
-        animation: 150,
-        ghostClass: 'sortable-ghost',
-        onEnd: () => {
-          const sorted = Array.from(container.children).map(el => el.dataset.src);
-          localStorage.setItem('videoOrder', JSON.stringify(sorted));
-          viewer.src = sorted[0] || '';
-        }
-      });
-
-      if (!viewer.src && sortedContent.length > 0) {
-        viewer.src = sortedContent[0].src;
-        const first = container.querySelector(`[data-src="${sortedContent[0].src}"]`);
-        if (first) first.classList.add('active');
-        currentActiveSrc = sortedContent[0].src;
-      }
-
       updateCount();
     }
 
     function resetOrder() {
       if (confirm("Vill du återställa till ursprunglig ordning?")) {
-        localStorage.removeItem('videoOrder');
         location.reload();
       }
     }
