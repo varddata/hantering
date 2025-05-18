@@ -19,24 +19,23 @@ async function loadContent() {
   container.innerHTML = '';
   content.forEach(item => {
     const div = document.createElement('div');
-    div.className  = 'sidebar-item';
-    div.tabIndex   = 0;
+    div.className    = 'sidebar-item';
+    div.tabIndex     = 0;
     div.setAttribute('role','button');
     div.dataset.type = item.type;
     div.dataset.src  = item.src;
 
-    // SIDOPANEL: endast bild eller placeholder för video
+    // Förhandsgranskning: bara bild eller placeholder – ingen uppspelning här
     let previewHtml;
     if (item.type === 'video') {
-      if (item.preview) {
-        previewHtml = `<img src="${item.preview}" alt="Förhandsvisning" loading="lazy">`;
-      } else {
-        previewHtml = `<div class="video-placeholder"></div>`;
-      }
+      previewHtml = item.preview
+        ? `<img src="${item.preview}" alt="Förhandsvisning" loading="lazy">`
+        : `<div class="video-placeholder"></div>`;
     } else if (item.preview) {
       previewHtml = `<img src="${item.preview}" alt="Förhandsvisning" loading="lazy">`;
     } else {
-      previewHtml = `<img src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg" alt="PDF" loading="lazy">`;
+      previewHtml = `<img src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg"
+                        alt="PDF" loading="lazy">`;
     }
 
     div.innerHTML = `
@@ -45,16 +44,15 @@ async function loadContent() {
         <span class="title">${item.title}</span>
         <span class="description">${item.description}</span>
         <span class="tag">${item.tag}</span>
-        <button class="open-new">Öppna i nytt fönster</button>
+        <button class="open-new">Öppna i nytt fönster för ljud</button>
       </div>
     `;
 
-    // Visa i huvudfönstret
     function openViewer() {
       viewer.innerHTML = '';
       // knapp i visaren
       const btn = document.createElement('button');
-      btn.textContent = 'Öppna i nytt fönster';
+      btn.textContent = 'Öppna i nytt fönster för ljud';
       btn.className   = 'open-new';
       btn.style.position = 'absolute';
       btn.style.top      = '1rem';
@@ -64,7 +62,7 @@ async function loadContent() {
         window.open(item.src, '_blank', 'noopener');
       });
 
-      // om MP4 finns, använd video-tag, annars iframe embed
+      // om mp4 finns, använd video-tag; annars embed-iframe
       if (item.mp4) {
         const vid = document.createElement('video');
         vid.controls    = true;
@@ -74,22 +72,26 @@ async function loadContent() {
       } else {
         const iframe = document.createElement('iframe');
         const sep    = item.src.includes('?') ? '&' : '?';
-        iframe.src         = item.src.includes('embed') ? item.src : `${item.src}${sep}embed`;
-        iframe.allow       = 'autoplay; fullscreen; encrypted-media; picture-in-picture';
+        iframe.src            = item.src.includes('embed')
+                                ? item.src
+                                : `${item.src}${sep}embed`;
+        iframe.allow          = 'autoplay; fullscreen; encrypted-media; picture-in-picture';
         iframe.allowFullscreen = true;
-        iframe.loading     = 'lazy';
-        iframe.title       = item.title;
+        iframe.loading        = 'lazy';
+        iframe.title          = item.title;
         viewer.appendChild(iframe);
       }
 
       viewer.appendChild(btn);
     }
 
+    // Klick/Enter öppnar i huvudvisaren
     div.addEventListener('click', openViewer);
     div.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') openViewer();
     });
-    // knapp i sidpanelen
+
+    // Knapp i sidpanelen
     div.querySelector('.open-new').addEventListener('click', e => {
       e.stopPropagation();
       window.open(item.src, '_blank', 'noopener');
