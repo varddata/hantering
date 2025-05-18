@@ -25,12 +25,17 @@ async function loadContent() {
     div.dataset.type = item.type;
     div.dataset.src  = item.src;
 
-    // Förhandsgranskning: bara bild eller placeholder – ingen uppspelning här
+    // SIDOPANEL: video-preview eller ikon
     let previewHtml;
-    if (item.type === 'video') {
-      previewHtml = item.preview
-        ? `<img src="${item.preview}" alt="Förhandsvisning" loading="lazy">`
-        : `<div class="video-placeholder"></div>`;
+    if (item.type === 'video' && item.mp4) {
+      // video-tag utan kontroller visar första frame
+      previewHtml = `
+        <video 
+          src="${item.mp4}" 
+          muted 
+          preload="metadata"
+          class="video-preview">
+        </video>`;
     } else if (item.preview) {
       previewHtml = `<img src="${item.preview}" alt="Förhandsvisning" loading="lazy">`;
     } else {
@@ -50,6 +55,7 @@ async function loadContent() {
 
     function openViewer() {
       viewer.innerHTML = '';
+
       // knapp i visaren
       const btn = document.createElement('button');
       btn.textContent = 'Öppna i nytt fönster för ljud';
@@ -59,10 +65,17 @@ async function loadContent() {
       btn.style.right    = '1rem';
       btn.addEventListener('click', e => {
         e.stopPropagation();
-        window.open(item.src, '_blank', 'noopener');
+        // pause/städa huvudspelaren
+        const vid = viewer.querySelector('video');
+        if (vid) vid.pause();
+        const ifr = viewer.querySelector('iframe');
+        if (ifr) ifr.src = '';
+        // öppna URL
+        const url = item.mp4 || item.src;
+        window.open(url, '_blank', 'noopener');
       });
 
-      // om mp4 finns, använd video-tag; annars embed-iframe
+      // bygg huvudspelare
       if (item.mp4) {
         const vid = document.createElement('video');
         vid.controls    = true;
@@ -85,28 +98,33 @@ async function loadContent() {
       viewer.appendChild(btn);
     }
 
-    // Klick/Enter öppnar i huvudvisaren
+    // öppna i viewer
     div.addEventListener('click', openViewer);
     div.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') openViewer();
     });
 
-    // Knapp i sidpanelen
+    // knapp i sidpanelen: pausa/städa huvudspelare, öppna nytt fönster
     div.querySelector('.open-new').addEventListener('click', e => {
       e.stopPropagation();
-      window.open(item.src, '_blank', 'noopener');
+      const vid = viewer.querySelector('video');
+      if (vid) vid.pause();
+      const ifr = viewer.querySelector('iframe');
+      if (ifr) ifr.src = '';
+      const url = item.mp4 || item.src;
+      window.open(url, '_blank', 'noopener');
     });
 
     container.appendChild(div);
   });
 
-  // Auto-öppna första
-  const first = content.find(c => c.type === 'video' || c.type === 'report');
+  // auto-öppna första
+  const first = content.find(c => c.type==='video' || c.type==='report');
   if (first) {
     document.querySelector(`.sidebar-item[data-src="${first.src}"]`).click();
   }
 
-  // Filtrering
+  // filter
   document.getElementById('showVideos').addEventListener('change', filterItems);
   document.getElementById('showReports').addEventListener('change', filterItems);
 }
@@ -116,7 +134,7 @@ function filterItems() {
   const showReports = document.getElementById('showReports').checked;
   document.querySelectorAll('.sidebar-item').forEach(item => {
     const type = item.dataset.type;
-    const vis  = (type === 'video' && showVideos) || (type === 'report' && showReports);
+    const vis  = (type==='video' && showVideos) || (type==='report' && showReports);
     item.classList.toggle('hidden', !vis);
   });
 }
