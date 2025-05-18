@@ -45,6 +45,7 @@
     "title": "13 b Fabric demo Eng",
     "description": "The project has created a test environment in MS Fabric to show how data can be managed in the new data hub.",
     "tag": ""
+    "featured": true
   },
   {
     "type": "video",
@@ -136,6 +137,7 @@
     "title": "0. Vårddatahantering, hela filmen",
     "description": "Det här är en sammanslagning av alla kortfilmerna till en enda lite längre film.",
     "tag": "Projektet"
+    "featured": true
   },
   {
     "type": "report",
