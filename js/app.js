@@ -25,17 +25,20 @@ async function loadContent() {
     div.dataset.type = item.type;
     div.dataset.src  = item.src;
 
-    // SIDOPANEL: video-preview eller ikon
+    // SIDOPANEL: Canva-embed-iframe som preview
     let previewHtml;
-    if (item.type === 'video' && item.mp4) {
-      // video-tag utan kontroller visar första frame
+    if (item.type === 'video') {
+      const sep = item.src.includes('?') ? '&' : '?';
+      const embedUrl = item.src.includes('embed')
+        ? item.src
+        : `${item.src}${sep}embed`;
       previewHtml = `
-        <video 
-          src="${item.mp4}" 
-          muted 
-          preload="metadata"
-          class="video-preview">
-        </video>`;
+        <iframe
+          src="${embedUrl}"
+          allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+          loading="lazy"
+          title="${item.title}">
+        </iframe>`;
     } else if (item.preview) {
       previewHtml = `<img src="${item.preview}" alt="Förhandsvisning" loading="lazy">`;
     } else {
@@ -56,7 +59,7 @@ async function loadContent() {
     function openViewer() {
       viewer.innerHTML = '';
 
-      // knapp i visaren
+      // Knapp i viewer
       const btn = document.createElement('button');
       btn.textContent = 'Öppna i nytt fönster för ljud';
       btn.className   = 'open-new';
@@ -65,17 +68,18 @@ async function loadContent() {
       btn.style.right    = '1rem';
       btn.addEventListener('click', e => {
         e.stopPropagation();
-        // pause/städa huvudspelaren
+        // Stoppa ev. HTML5-video
         const vid = viewer.querySelector('video');
         if (vid) vid.pause();
+        // Töm iframe så ljudet tystnar
         const ifr = viewer.querySelector('iframe');
         if (ifr) ifr.src = '';
-        // öppna URL
+        // Öppna nytt fönster
         const url = item.mp4 || item.src;
         window.open(url, '_blank', 'noopener');
       });
 
-      // bygg huvudspelare
+      // Bygg rätt spelare
       if (item.mp4) {
         const vid = document.createElement('video');
         vid.controls    = true;
@@ -85,26 +89,25 @@ async function loadContent() {
       } else {
         const iframe = document.createElement('iframe');
         const sep    = item.src.includes('?') ? '&' : '?';
-        iframe.src            = item.src.includes('embed')
+        iframe.src           = item.src.includes('embed')
                                 ? item.src
                                 : `${item.src}${sep}embed`;
-        iframe.allow          = 'autoplay; fullscreen; encrypted-media; picture-in-picture';
+        iframe.allow         = 'autoplay; fullscreen; encrypted-media; picture-in-picture';
         iframe.allowFullscreen = true;
-        iframe.loading        = 'lazy';
-        iframe.title          = item.title;
+        iframe.loading       = 'lazy';
+        iframe.title         = item.title;
         viewer.appendChild(iframe);
       }
 
       viewer.appendChild(btn);
     }
 
-    // öppna i viewer
     div.addEventListener('click', openViewer);
     div.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') openViewer();
     });
 
-    // knapp i sidpanelen: pausa/städa huvudspelare, öppna nytt fönster
+    // Knapp i sidebar
     div.querySelector('.open-new').addEventListener('click', e => {
       e.stopPropagation();
       const vid = viewer.querySelector('video');
@@ -118,13 +121,13 @@ async function loadContent() {
     container.appendChild(div);
   });
 
-  // auto-öppna första
+  // Auto-öppna första
   const first = content.find(c => c.type==='video' || c.type==='report');
   if (first) {
     document.querySelector(`.sidebar-item[data-src="${first.src}"]`).click();
   }
 
-  // filter
+  // Filtrering
   document.getElementById('showVideos').addEventListener('change', filterItems);
   document.getElementById('showReports').addEventListener('change', filterItems);
 }
