@@ -6,9 +6,9 @@
     "description": "Förklarar skillnaden på primär- och sekundäranvändning och förklarar att projektet fokuserar på sekundäranvändningen.",
     "tag": [
       "Data",
-      "Sekundäranvändning",
-      "preview": "bilder/Sekundär.JPG"
+      "Sekundäranvändning"
     ],
+    "preview": "bilder/Sekundär.JPG",
     "status": "Ny",
     "date": "2025-05-18"
   },
