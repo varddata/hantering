@@ -18,6 +18,7 @@ body {
   font-family: var(--env-font-family);
   background: var(--env-background-color);
   color: var(--env-font-color);
+  font-size: 16px;
 }
 
 /* Header */
@@ -37,7 +38,7 @@ h1 { margin: 0; font-weight: 600; }
   margin: 1rem auto;
   padding: 1rem;
   max-width: 800px;
-  font-size: .95rem;
+  font-size: 0.95rem;
 }
 .disclaimer a { color: #004c6c; text-decoration: underline; }
 
@@ -46,20 +47,21 @@ h1 { margin: 0; font-weight: 600; }
   display: flex;
   justify-content: center;
   gap: 1rem;
-  padding: .75rem 1rem;
+  padding: 0.75rem 1rem;
   height: var(--filter-height);
 }
 
-/* Layout */
+/* Huvudlayout: två kolumner på desktop */
 .main-layout {
   display: grid;
-  grid-template-columns: 320px auto;
+  grid-template-columns: 320px 1fr;
+  grid-template-areas: 'sidebar content';
   gap: 1rem;
 }
 
 /* Sidebar */
 .sidebar {
-  grid-row: 2; /* default on desktop, overwritten on mobile */
+  grid-area: sidebar;
   width: 320px;
   height: calc(100vh - var(--header-height) - var(--filter-height));
   overflow-y: auto;
@@ -73,7 +75,6 @@ h1 { margin: 0; font-weight: 600; }
   align-items: center;
 }
 .sidebar-item img,
-.sidebar-item video,
 .sidebar-item .video-placeholder {
   width: 66%;
   max-width: 140px;
@@ -91,13 +92,13 @@ h1 { margin: 0; font-weight: 600; }
   flex-direction: column;
 }
 .title {
-  font-size: .95rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: #004c6c;
 }
 .description {
-  font-size: .85rem;
-  margin-top: .25rem;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
 }
 .tag {
   display: inline-block;
@@ -105,12 +106,12 @@ h1 { margin: 0; font-weight: 600; }
   color: #004c6c;
   padding: 2px 6px;
   border-radius: 4px;
-  font-size: .75rem;
-  margin-top: .3rem;
+  font-size: 0.75rem;
+  margin-top: 0.3rem;
 }
 .open-new {
-  margin-top: .5rem;
-  font-size: .8rem;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
   padding: 4px 8px;
   background: #004c6c;
   color: #fff;
@@ -119,12 +120,11 @@ h1 { margin: 0; font-weight: 600; }
   cursor: pointer;
   align-self: flex-start;
 }
-.open-new:hover { opacity: .9; }
+.open-new:hover { opacity: 0.9; }
 
-/* Viewer */
+/* Visningsruta till höger */
 .content-display {
-  grid-row: 1;
-  position: relative; /* for desktop just places it */
+  grid-area: content;
   width: 100%;
   max-width: var(--content-max-width);
   margin: 0 auto;
@@ -139,14 +139,17 @@ h1 { margin: 0; font-weight: 600; }
   margin: 0 auto;
 }
 
-/* Hide on filter */
+/* Dölja vid filtrering */
 .hidden { display: none !important; }
 
-/* Mobile tweaks */
+/* Mobil / mindre skärmar */
 @media (max-width: 900px) {
   .main-layout {
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr; /* viewer + sidebar */
+    grid-template-rows: auto 1fr; /* först content, sedan sidebar */
+    grid-template-areas:
+      'content'
+      'sidebar';
   }
   .content-display {
     position: sticky;
@@ -159,6 +162,7 @@ h1 { margin: 0; font-weight: 600; }
     max-height: none;
   }
   .sidebar {
-    grid-row: 2;
+    /* sidebar scrollar under den sticky content-display */
+    height: calc(100vh - var(--header-height) - var(--filter-height));
   }
 }
