@@ -1,34 +1,33 @@
 :root {
   --font: 'Source Sans Pro',sans-serif;
-  --col-text: #222;
-  --col-bg: #fff;
-  --col-header: #377D7A;
-  --h-header: 4rem;
-  --h-filter: 3rem;
-  --w-sidebar: 300px;
-  --max-content: 1000px;
-  --col-border: #ccc;
+  --text: #222;
+  --bg: #fff;
+  --header-bg: #377D7A;
+  --sidebar-w: 300px;
+  --content-max: 1000px;
+  --border: #ccc;
 }
 
 *,*::before,*::after { box-sizing:border-box; }
 body {
   margin:0; padding:0;
   font-family: var(--font);
-  color: var(--col-text);
-  background: var(--col-bg);
+  color: var(--text);
+  background: var(--bg);
 }
 header {
-  background: var(--col-header);
-  color: #fff;
+  background: var(--header-bg);
+  color:#fff;
   padding:1rem 2rem;
   text-align:center;
-  height: var(--h-header);
 }
 .subtitle {
-  margin-top:.5rem; font-weight:300;
+  margin-top:.5rem;
+  font-weight:300;
 }
 .disclaimer {
-  max-width:800px; margin:1rem auto;
+  max-width:800px;
+  margin:1rem auto;
   padding:1rem;
   background:#fff;
   border-left:5px solid #FFA500;
@@ -38,10 +37,10 @@ header {
 
 .controls {
   display:flex; justify-content:space-between;
-  flex-wrap:wrap; padding:0 1rem 1rem;
+  flex-wrap:wrap;
+  padding:0 1rem 1rem;
 }
-.filter label,
-.sort label { margin-right:.5rem; }
+.filter label, .sort label { margin-right:.5rem; }
 .sort select { font-size:1rem; padding:.25rem; }
 
 .grid-layout {
@@ -49,7 +48,7 @@ header {
   grid-template-areas:
     "top    top    top"
     "left   content right";
-  grid-template-columns: var(--w-sidebar) 1fr var(--w-sidebar);
+  grid-template-columns: var(--sidebar-w) 1fr var(--sidebar-w);
   grid-template-rows: auto 1fr;
   gap:1rem;
   padding:0 1rem 1rem;
@@ -57,54 +56,59 @@ header {
 
 .top-list-container {
   grid-area: top;
-  border:1px solid var(--col-border);
+  border:1px solid var(--border);
   border-radius:4px;
   padding:.5rem;
 }
 .top-list {
-  display:flex; gap:.5rem;
-  overflow-x:auto; padding:.5rem 0;
+  display:flex;
+  gap:.5rem;
+  overflow-x:auto;
+  padding:.5rem 0;
 }
 
 .sidebar.left  { grid-area:left; }
-.sidebar.right { grid-area:right;}
+.sidebar.right { grid-area:right; }
 .content-display { grid-area:content;
   position:relative;
-  max-width:var(--max-content);
+  max-width:var(--content-max);
   margin:0 auto;
 }
 
 .sidebar {
   background:#f9f9f9;
   padding:1rem;
-  border:1px solid var(--col-border);
+  border:1px solid var(--border);
   border-radius:4px;
-  max-height: calc(100vh - var(--h-header) - var(--h-filter) - 2rem);
+  max-height: 80vh;
   overflow-y:auto;
 }
 .sidebar h2 {
-  margin-top:0; font-size:1.1rem;
-  border-bottom:1px solid var(--col-border);
+  margin-top:0;
+  font-size:1.1rem;
+  border-bottom:1px solid var(--border);
   padding-bottom:.5rem;
 }
 
 .sidebar-item {
-  display:flex; gap:1rem; margin-bottom:1rem;
-  align-items:center; position:relative;
+  position:relative;
+  display:flex;
+  gap:1rem;
+  margin-bottom:1rem;
+  align-items:center;
 }
-.sidebar-item iframe,
 .sidebar-item img {
   width:80px; height:45px;
-  object-fit:cover; border-radius:4px;
-  border:none; flex-shrink:0;
+  object-fit:cover;
+  border-radius:4px;
+  flex-shrink:0;
 }
-.sidebar-item iframe { pointer-events:none; }
 
-/* overlay-symbol */
+/* overlay ↗ på preview-bilder */
 .sidebar-item::after {
   content: "↗";
   position:absolute;
-  bottom:0.25rem; right:0.25rem;
+  bottom:4px; right:4px;
   background:rgba(255,255,255,0.8);
   border-radius:2px;
   padding:2px;
@@ -118,19 +122,17 @@ header {
        background:#e0f0f8; color:#004c6c;
        padding:2px 6px; border-radius:4px; }
 
-/* göm knappar, använder bara overlay-symbol */
-.open-new { display:none; }
-
 .content-display iframe,
 .content-display video {
-  width:100%; aspect-ratio:16/9;
-  border:none; display:block; margin:0 auto;
+  width:100%;
+  aspect-ratio:16/9;
+  display:block;
+  margin:0 auto;
 }
-/* ta bort max-height så visare är fullstor igen */
 
 .hidden { display:none !important; }
 
-/* mobil */
+/* Mobil: stapla sektioner, sticky viewer */
 @media(max-width:900px){
   .grid-layout {
     grid-template-areas:
@@ -143,9 +145,9 @@ header {
   }
   .content-display {
     position:sticky;
-    top: calc(var(--h-header)+var(--h-filter));
+    top:0;
     z-index:10;
-    background:var(--col-bg);
+    background:var(--bg);
   }
   .sidebar { max-height:none; }
 }
