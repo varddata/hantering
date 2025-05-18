@@ -38,20 +38,20 @@ h1 { margin: 0; font-weight: 600; }
   margin: 1rem auto;
   padding: 1rem;
   max-width: 800px;
-  font-size: 0.95rem;
+  font-size: .95rem;
 }
 .disclaimer a { color: #004c6c; text-decoration: underline; }
 
-/* Filter bar */
+/* Filter */
 .filter {
   display: flex;
   justify-content: center;
   gap: 1rem;
-  padding: 0.75rem 1rem;
+  padding: .75rem 1rem;
   height: var(--filter-height);
 }
 
-/* Huvudlayout: två kolumner på desktop */
+/* Layout */
 .main-layout {
   display: grid;
   grid-template-columns: 320px 1fr;
@@ -74,44 +74,38 @@ h1 { margin: 0; font-weight: 600; }
   margin-bottom: 1rem;
   align-items: center;
 }
-.sidebar-item img,
-.sidebar-item .video-placeholder {
+.sidebar-item iframe,
+.sidebar-item img {
   width: 66%;
   max-width: 140px;
   aspect-ratio: 16/9;
   border-radius: 4px;
-  object-fit: cover;
+  border: none;
   flex-shrink: 0;
 }
-.video-placeholder {
-  background: #ddd url('https://upload.wikimedia.org/wikipedia/commons/7/75/Video-play-icon-white.png') no-repeat center/40%;
+/* Gör preview-iframe statisk */
+.sidebar-item iframe {
+  pointer-events: none;
 }
 .info {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
-.title {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #004c6c;
-}
-.description {
-  font-size: 0.85rem;
-  margin-top: 0.25rem;
-}
+.title { font-size: .95rem; font-weight: 600; color: #004c6c; }
+.description { font-size: .85rem; margin-top: .25rem; }
 .tag {
   display: inline-block;
   background: #e0f0f8;
   color: #004c6c;
   padding: 2px 6px;
   border-radius: 4px;
-  font-size: 0.75rem;
-  margin-top: 0.3rem;
+  font-size: .75rem;
+  margin-top: .3rem;
 }
 .open-new {
-  margin-top: 0.5rem;
-  font-size: 0.8rem;
+  margin-top: .5rem;
+  font-size: .8rem;
   padding: 4px 8px;
   background: #004c6c;
   color: #fff;
@@ -120,9 +114,9 @@ h1 { margin: 0; font-weight: 600; }
   cursor: pointer;
   align-self: flex-start;
 }
-.open-new:hover { opacity: 0.9; }
+.open-new:hover { opacity: .9; }
 
-/* Visningsruta till höger */
+/* Viewer (höger) */
 .content-display {
   grid-area: content;
   width: 100%;
@@ -139,14 +133,14 @@ h1 { margin: 0; font-weight: 600; }
   margin: 0 auto;
 }
 
-/* Dölja vid filtrering */
+/* Dölja */
 .hidden { display: none !important; }
 
-/* Mobil / mindre skärmar */
+/* Mobil */
 @media (max-width: 900px) {
   .main-layout {
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr; /* först content, sedan sidebar */
+    grid-template-rows: auto 1fr;
     grid-template-areas:
       'content'
       'sidebar';
@@ -158,11 +152,6 @@ h1 { margin: 0; font-weight: 600; }
     background: var(--env-background-color);
   }
   .content-display iframe,
-  .content-display video {
-    max-height: none;
-  }
-  .sidebar {
-    /* sidebar scrollar under den sticky content-display */
-    height: calc(100vh - var(--header-height) - var(--filter-height));
-  }
+  .content-display video { max-height: none; }
+  .sidebar { height: calc(100vh - var(--header-height) - var(--filter-height)); }
 }
