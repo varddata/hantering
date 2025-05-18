@@ -9,16 +9,16 @@ async function main() {
 
   let items;
   try {
-    const res = await fetch('data.json');
+    const res = await fetch('./data.json');
     if (!res.ok) throw new Error(res.statusText);
     items = await res.json();
   } catch (e) {
     container.textContent = 'Kunde inte ladda innehåll.';
-    console.error(e);
+    console.error('Fetch error:', e);
     return;
   }
 
-  // Gemensam fabrik för listobjekt
+  // Skapar en .sidebar-item för både top-list, vänster & högerlistor
   function makeItem(item) {
     const div = document.createElement('div');
     div.className    = 'sidebar-item';
@@ -26,25 +26,30 @@ async function main() {
     div.setAttribute('role','button');
     div.dataset.type = item.type;
     div.dataset.src  = item.src;
-    if (item.featured) div.classList.add('featured');
 
-    // Preview: Canva-iframe eller bild
-    let preview;
+    // Preview: Canva-iframe eller bild eller ikon
+    let previewHtml;
     if (item.type === 'video') {
-      const sep = item.src.includes('?') ? '&' : '?';
+      const sep   = item.src.includes('?') ? '&' : '?';
       const embed = item.src.includes('embed')
         ? item.src
         : item.src + sep + 'embed';
-      preview = `<iframe src="${embed}" allow="autoplay; fullscreen" loading="lazy" title="${item.title}"></iframe>`;
+      previewHtml = `
+        <iframe
+          src="${embed}"
+          allow="autoplay; fullscreen"
+          loading="lazy"
+          title="${item.title}">
+        </iframe>`;
     } else if (item.preview) {
-      preview = `<img src="${item.preview}" alt="Förhandsvisning" loading="lazy">`;
+      previewHtml = `<img src="${item.preview}" alt="Förhandsvisning" loading="lazy">`;
     } else {
-      preview = `<img src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg"
-                     alt="PDF" loading="lazy">`;
+      previewHtml = `<img src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg"
+                        alt="PDF" loading="lazy">`;
     }
 
     div.innerHTML = `
-      ${preview}
+      ${previewHtml}
       <div class="info">
         <span class="title">${item.title}</span>
         <span class="description">${item.description || ''}</span>
@@ -52,13 +57,13 @@ async function main() {
         <button class="open-new">Öppna i nytt fönster för ljud</button>
       </div>`;
 
-    // Klick eller Enter → visa i viewer
+    // Klick / Enter → visa i viewer
     div.addEventListener('click', () => showInViewer(item));
     div.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') showInViewer(item);
     });
 
-    // Öppna i nytt fönster-knapp
+    // Öppna i nytt fönster-knapp (pausar först)
     div.querySelector('.open-new').addEventListener('click', e => {
       e.stopPropagation();
       pauseCurrent();
@@ -68,23 +73,41 @@ async function main() {
     return div;
   }
 
-  // Rendera alla listor
-  items.forEach(item => {
-    const el = makeItem(item);
-    if (item.featured) featuredList.appendChild(el);
-    else if (item.type === 'report') reportList.appendChild(el);
-    else container.appendChild(el);
-  });
+  // Hämta ut valda och dela upp i listor
+  let featuredItems = items.filter(i => i.featured);
+  if (featuredItems.length === 0) {
+    featuredItems = items.filter(i => i.type === 'video').slice(0, 3);
+  }
+  const reports     = items.filter(i => i.type === 'report');
+  const normalItems = items
+    .filter(i => i.type === 'video')
+    .filter(i => !featuredItems.includes(i));
 
-  // Initial visning: första featured eller första video
-  const first = items.find(i => i.featured) || items.find(i => i.type==='video');
+  // Rendera top-listan
+  featuredList.innerHTML = '';
+  featuredItems.forEach(item => featuredList.appendChild(makeItem(item)));
+
+  // Rendera vänsterlistan (alla icke-featured filmer)
+  container.innerHTML = '';
+  normalItems.forEach(item => container.appendChild(makeItem(item)));
+
+  // Rendera högerlistan (rapporter)
+  reportList.innerHTML = '';
+  reports.forEach(item => reportList.appendChild(makeItem(item)));
+
+  // Visa första i viewer
+  const first = featuredItems[0] || normalItems[0];
   if (first) showInViewer(first);
 
-  // Visa i huvudfönster
+  // Koppla filter
+  document.getElementById('showVideos').addEventListener('change', filter);
+  document.getElementById('showReports').addEventListener('change', filter);
+
+  // Visar valt objekt i content-display
   function showInViewer(item) {
     pauseCurrent();
     viewer.innerHTML = '';
-    // Spelare
+
     if (item.mp4) {
       const v = document.createElement('video');
       v.controls    = true;
@@ -94,16 +117,16 @@ async function main() {
     } else {
       const iframe = document.createElement('iframe');
       const sep    = item.src.includes('?') ? '&' : '?';
-      iframe.src            = item.src.includes('embed')
+      iframe.src           = item.src.includes('embed')
                               ? item.src
                               : item.src + sep + 'embed';
-      iframe.allow          = 'autoplay; fullscreen';
+      iframe.allow         = 'autoplay; fullscreen';
       iframe.allowFullscreen = true;
-      iframe.loading        = 'lazy';
-      iframe.title          = item.title;
+      iframe.loading       = 'lazy';
+      iframe.title         = item.title;
       viewer.appendChild(iframe);
     }
-    // knapp i viewer
+
     const btn = document.createElement('button');
     btn.textContent = 'Öppna i nytt fönster för ljud';
     btn.className   = 'open-new';
@@ -118,7 +141,7 @@ async function main() {
     viewer.appendChild(btn);
   }
 
-  // Pausa/töm tidigare spelare
+  // Pausar/stoppar befintlig spelare
   function pauseCurrent() {
     const v = viewer.querySelector('video');
     if (v) v.pause();
@@ -126,15 +149,16 @@ async function main() {
     if (i) i.src = '';
   }
 
-  // Filter-funktion
-  document.getElementById('showVideos').addEventListener('change', filter);
-  document.getElementById('showReports').addEventListener('change', filter);
+  // Filtreringsfunktion
   function filter() {
     const sv = document.getElementById('showVideos').checked;
     const sr = document.getElementById('showReports').checked;
     document.querySelectorAll('.sidebar-item').forEach(div => {
       const t = div.dataset.type;
-      const ok = (t==='video' && sv) || (t==='report' && sr) || div.classList.contains('featured');
+      const isFeatured = featuredItems.some(f => f.src === div.dataset.src);
+      const ok = isFeatured ||
+                 (t === 'video' && sv) ||
+                 (t === 'report' && sr);
       div.classList.toggle('hidden', !ok);
     });
   }
