@@ -1,13 +1,14 @@
 /* css/styles.css */
 :root {
-  --env-font-family: 'Source Sans Pro', sans-serif;
-  --env-font-color: #222222;
-  --env-background-color: #ffffff;
-  --env-header-background: #377D7A;
+  --font: 'Source Sans Pro', sans-serif;
+  --text-color: #222222;
+  --bg-color: #ffffff;
+  --header-bg: #377D7A;
   --header-height: 4rem;
   --filter-height: 3rem;
   --sidebar-width: 300px;
-  --content-max-width: 1000px;
+  --content-max-width: 800px; /* här bestämmer du maxbredden på videon */
+  --gap: 1rem;
   --border-color: #ccc;
 }
 
@@ -18,13 +19,13 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: var(--env-font-family);
-  color: var(--env-font-color);
-  background: var(--env-background-color);
+  font-family: var(--font);
+  color: var(--text-color);
+  background: var(--bg-color);
 }
 
 header {
-  background: var(--env-header-background);
+  background: var(--header-bg);
   color: #fff;
   padding: 1rem 2rem;
   text-align: center;
@@ -43,7 +44,6 @@ header {
   border-left: 5px solid #FFA500;
   font-size: 0.95rem;
 }
-
 .disclaimer a {
   color: #004c6c;
   text-decoration: underline;
@@ -55,12 +55,9 @@ header {
   flex-wrap: wrap;
   padding: 0 1rem 1rem;
 }
-
-.filter label,
-.sort label {
+.filter label, .sort label {
   margin-right: 0.5rem;
 }
-
 .sort select {
   font-size: 1rem;
   padding: 0.25rem;
@@ -68,12 +65,15 @@ header {
 
 .grid-layout {
   display: grid;
+  /* max-bredd = sidebar + content + sidebar */
+  max-width: calc(var(--sidebar-width) * 2 + var(--content-max-width));
+  margin: 0 auto;
   grid-template-areas:
     "top    top     top"
     "left   content right";
   grid-template-columns: var(--sidebar-width) 1fr var(--sidebar-width);
   grid-template-rows: auto 1fr;
-  gap: 1rem;
+  gap: var(--gap);
   padding: 0 1rem 1rem;
 }
 
@@ -83,7 +83,6 @@ header {
   border-radius: 4px;
   padding: 0.5rem;
 }
-
 .top-list {
   display: flex;
   gap: 0.5rem;
@@ -91,13 +90,8 @@ header {
   padding: 0.5rem 0;
 }
 
-.sidebar.left {
-  grid-area: left;
-}
-
-.sidebar.right {
-  grid-area: right;
-}
+.sidebar.left { grid-area: left; }
+.sidebar.right { grid-area: right; }
 
 .content-display {
   grid-area: content;
@@ -108,6 +102,7 @@ header {
   overflow: hidden;
 }
 
+/* Gör videon responsiv och max-höjd så den inte sticker ut */
 .content-display iframe,
 .content-display video {
   width: 100%;
@@ -130,7 +125,6 @@ header {
   max-height: calc(100vh - var(--header-height) - var(--filter-height) - 2rem);
   overflow-y: auto;
 }
-
 .sidebar h2 {
   margin-top: 0;
   font-size: 1.1rem;
@@ -154,6 +148,7 @@ header {
   flex-shrink: 0;
 }
 
+/* overlay-symbol ↗ */
 .sidebar-item::after {
   content: "↗";
   position: absolute;
@@ -170,17 +165,14 @@ header {
   display: flex;
   flex-direction: column;
 }
-
 .title {
   font-weight: 600;
   color: #004c6c;
 }
-
 .description {
   font-size: 0.85rem;
   margin-top: 0.25rem;
 }
-
 .tag {
   font-size: 0.75rem;
   margin-top: 0.3rem;
@@ -208,7 +200,7 @@ header {
     position: sticky;
     top: 0;
     z-index: 10;
-    background: var(--env-background-color);
+    background: var(--bg-color);
   }
   .content-display iframe,
   .content-display video {
