@@ -1,10 +1,14 @@
+/* css/styles.css */
 :root {
-  --font: 'Source Sans Pro',sans-serif;
-  --col-text: #222;
-  --col-bg: #fff;
-  --col-header: #377D7A;
-  --sidebar-w: 300px;
-  --border: #ccc;
+  --env-font-family: 'Source Sans Pro', sans-serif;
+  --env-font-color: #222222;
+  --env-background-color: #ffffff;
+  --env-header-background: #377D7A;
+  --header-height: 4rem;
+  --filter-height: 3rem;
+  --sidebar-width: 300px;
+  --content-max-width: 1000px;
+  --border-color: #ccc;
 }
 
 *, *::before, *::after {
@@ -14,13 +18,13 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: var(--font);
-  color: var(--col-text);
-  background: var(--col-bg);
+  font-family: var(--env-font-family);
+  color: var(--env-font-color);
+  background: var(--env-background-color);
 }
 
 header {
-  background: var(--col-header);
+  background: var(--env-header-background);
   color: #fff;
   padding: 1rem 2rem;
   text-align: center;
@@ -42,6 +46,7 @@ header {
 
 .disclaimer a {
   color: #004c6c;
+  text-decoration: underline;
 }
 
 .controls {
@@ -66,7 +71,7 @@ header {
   grid-template-areas:
     "top    top     top"
     "left   content right";
-  grid-template-columns: var(--sidebar-w) 1fr var(--sidebar-w);
+  grid-template-columns: var(--sidebar-width) 1fr var(--sidebar-width);
   grid-template-rows: auto 1fr;
   gap: 1rem;
   padding: 0 1rem 1rem;
@@ -74,7 +79,7 @@ header {
 
 .top-list-container {
   grid-area: top;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   padding: 0.5rem;
 }
@@ -94,13 +99,13 @@ header {
   grid-area: right;
 }
 
-/* ----- Detta är justerat: ----- */
 .content-display {
   grid-area: content;
   position: relative;
-  width: 100%;           /* fyll ut hela kolumnen */
-  /* max-width och margin är borttagna */
-  padding: 0;            /* inga extra marginaler */
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  overflow: hidden;
 }
 
 .content-display iframe,
@@ -108,23 +113,28 @@ header {
   width: 100%;
   aspect-ratio: 16/9;
   display: block;
-  margin: 0;             /* fyll bredden, ingen centering */
+  margin: 0;
+  max-height: calc(
+    100vh
+    - var(--header-height)
+    - var(--filter-height)
+    - 2rem
+  );
 }
-/* ------------------------------ */
 
 .sidebar {
   background: #f9f9f9;
   padding: 1rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-color);
   border-radius: 4px;
-  max-height: 80vh;
+  max-height: calc(100vh - var(--header-height) - var(--filter-height) - 2rem);
   overflow-y: auto;
 }
 
 .sidebar h2 {
   margin-top: 0;
   font-size: 1.1rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-color);
   padding-bottom: 0.5rem;
 }
 
@@ -149,7 +159,7 @@ header {
   position: absolute;
   bottom: 4px;
   right: 4px;
-  background: rgba(255,255,255,0.8);
+  background: rgba(255, 255, 255, 0.8);
   border-radius: 2px;
   padding: 2px;
   font-size: 1rem;
@@ -198,7 +208,11 @@ header {
     position: sticky;
     top: 0;
     z-index: 10;
-    background: var(--col-bg);
+    background: var(--env-background-color);
+  }
+  .content-display iframe,
+  .content-display video {
+    max-height: none;
   }
   .sidebar {
     max-height: none;
