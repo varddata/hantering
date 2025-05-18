@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <title>Regiongemensam Vårddataprojekt</title>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+  <style>
+    body {
+      font-family: 'Source Sans Pro', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      color: #222222;
+    }
+    header {
+      background-color: #377D7A;
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+    }
+    .filter, .search-bar, .search-info {
+      text-align: center;
+      margin: 1rem;
+    }
+    .main-layout {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .sidebar {
+      width: 420px;
+      overflow-y: auto;
+      border-right: 1px solid #ccc;
+      padding: 1rem;
+    }
+    .sidebar-item {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      align-items: center;
+      cursor: move;
+      border-left: 4px solid transparent;
+      padding-left: 4px;
+    }
+    .sidebar-item.active {
+      background-color: #f0f7f8;
+      border-left: 4px solid #377D7A;
+    }
+    .sidebar-item iframe, .sidebar-item img {
+      width: 50%;
+      max-width: 180px;
+      border-radius: 4px;
+    }
+    .info {
+      flex: 1;
+    }
+    .title {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #004c6c;
+    }
+    .description, .tag, .status, .date {
+      font-size: 0.85rem;
+    }
+    .tag {
+      background-color: #e0f0f8;
+      color: #004c6c;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-top: 0.3rem;
+    }
+    .content-display {
+      max-width: 800px;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 2rem 1rem;
+    }
+    .content-display iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Regiongemensam vårddatahantering</h1>
+    <p>Kortfilmer och rapporter från projektet</p>
+  </header>
+
+  <div class="filter">
+    <label><input type="checkbox" id="showVideos" checked> Visa filmer</label>
+    <label><input type="checkbox" id="showReports" checked> Visa rapporter</label>
+    <button onclick="resetOrder()">Återställ ordning</button>
+    <label for="sortSelect">Sortera:</label>
+    <select id="sortSelect" onchange="loadContent()">
+      <option value="default">Ursprungsordning</option>
+      <option value="date">Datum (senaste först)</option>
+      <option value="status">Status</option>
+    </select>
+  </div>
+
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Sök efter titel, beskrivning eller tagg...">
+  </div>
+  <div class="search-info" id="resultCount"></div>
+
+  <div class="main-layout">
+    <aside class="sidebar" id="itemList"></aside>
+    <div class="content-display" id="viewer">
+      <iframe src="" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <script>
+    let currentActiveSrc = null;
+    function createItem(item) {
+      const container = document.getElementById('itemList');
+      const viewer = document.getElementById('viewer').querySelector('iframe');
+      const div = document.createElement('div');
+      div.className = 'sidebar-item';
+      div.dataset.type = item.type;
+      div.dataset.src = item.src;
+      div.dataset.title = item.title.toLowerCase();
+      div.dataset.description = item.description.toLowerCase();
+      div.dataset.tags = (Array.isArray(item.tag) ? item.tag.join(' ') : item.tag).toLowerCase();
+      div.dataset.date = item.date || '';
+      div.dataset.status = item.status || '';
+
+      const statusColor = item.status === 'Ny' ? '#4caf50' : item.status === 'Utkast' ? '#ff9800' : '#999';
+      const openInNewTab = item.openInNewTab && item.type === 'report';
+
+      const preview = item.preview ? `<img src="${item.preview}" alt="Förhandsvisning">` : item.type === 'video' ? `<iframe src="${item.src}" allowfullscreen></iframe>` : `<img src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg" alt="PDF">`;
+
+      div.innerHTML = `
+        ${preview}
+        <div class="info">
+          <span class="title">${item.title}</span>
+          ${item.date ? `<div class="date">${item.date}</div>` : ''}
+          <span class="description">${item.description}</span>
+          ${item.status ? `<div class="status" style="color:${statusColor};font-weight:bold;">${item.status}</div>` : ''}
+          ${Array.isArray(item.tag) ? item.tag.map(tag => `<span class="tag">${tag}</span>`).join('') : `<span class="tag">${item.tag}</span>`}
+        </div>
+      `;
+
+      div.addEventListener('click', () => {
+        if (openInNewTab) {
+          window.open(item.src, '_blank');
+        } else {
+          viewer.src = item.src;
+          document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+          div.classList.add('active');
+          currentActiveSrc = item.src;
+        }
+      });
+
+      container.appendChild(div);
+    }
+
+    async function loadContent() {
+      const response = await fetch(`data.json?t=${Date.now()}`);
+      const content = await response.json();
+      const container = document.getElementById('itemList');
+      const viewer = document.getElementById('viewer').querySelector('iframe');
+      const sortMode = document.getElementById('sortSelect')?.value || 'default';
+
+      let sortedContent = [...content];
+      if (sortMode === 'date') {
+        sortedContent.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+      } else if (sortMode === 'status') {
+        const order = { 'Ny': 1, 'Utkast': 2, 'Publicerad': 3 };
+        sortedContent.sort((a, b) => (order[a.status] || 99) - (order[b.status] || 99));
+      }
+
+      container.innerHTML = '';
+      sortedContent.forEach(item => createItem(item));
+
+      new Sortable(container, {
+        animation: 150,
+        ghostClass: 'sortable-ghost',
+        onEnd: () => {
+          const sorted = Array.from(container.children).map(el => el.dataset.src);
+          localStorage.setItem('videoOrder', JSON.stringify(sorted));
+          viewer.src = sorted[0] || '';
+        }
+      });
+
+      if (!viewer.src && sortedContent.length > 0) {
+        viewer.src = sortedContent[0].src;
+        const first = container.querySelector(`[data-src="${sortedContent[0].src}"]`);
+        if (first) first.classList.add('active');
+        currentActiveSrc = sortedContent[0].src;
+      }
+
+      updateCount();
+    }
+
+    function resetOrder() {
+      if (confirm("Vill du återställa till ursprunglig ordning?")) {
+        localStorage.removeItem('videoOrder');
+        location.reload();
+      }
+    }
+
+    function updateCount(count = null) {
+      const total = document.querySelectorAll('.sidebar-item').length;
+      const visible = count !== null ? count : total;
+      document.getElementById('resultCount').textContent = `Visar ${visible} av ${total} poster`;
+    }
+
+    function filterAll() {
+      const showVideos = document.getElementById('showVideos').checked;
+      const showReports = document.getElementById('showReports').checked;
+      const search = document.getElementById('searchInput').value.toLowerCase();
+
+      let visibleCount = 0;
+      document.querySelectorAll('.sidebar-item').forEach(item => {
+        const type = item.dataset.type;
+        const matchType = (type === 'video' && showVideos) || (type === 'report' && showReports);
+        const textMatch = item.dataset.title.includes(search) || item.dataset.description.includes(search) || item.dataset.tags.includes(search);
+        const show = matchType && textMatch;
+        item.style.display = show ? 'flex' : 'none';
+        if (show) visibleCount++;
+      });
+
+      updateCount(visibleCount);
+    }
+
+    document.getElementById('searchInput').addEventListener('input', filterAll);
+    document.getElementById('showVideos').addEventListener('change', filterAll);
+    document.getElementById('showReports').addEventListener('change', filterAll);
+
+    loadContent();
+  </script>
+</body>
+</html>
