@@ -2,218 +2,38 @@
 <html lang="sv">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Regiongemensam Vårddataprojekt</title>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-  <style>
-    body {
-      font-family: 'Source Sans Pro', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #ffffff;
-      color: #222222;
-    }
-    header {
-      background-color: #377D7A;
-      color: white;
-      padding: 1rem 2rem;
-      text-align: center;
-    }
-    .disclaimer {
-      background-color: #ffffff;
-      color: #222222;
-      border-left: 5px solid #FFA500;
-      margin: 1rem auto;
-      padding: 1rem;
-      max-width: 960px;
-      font-size: 0.95rem;
-      text-align: left;
-    }
-    .disclaimer a {
-      color: #004c6c;
-      text-decoration: underline;
-    }
-    .filter, .search-bar, .search-info {
-      text-align: center;
-      margin: 1rem;
-    }
-    .main-layout {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      gap: 2rem;
-    }
-    .sidebar {
-      width: 420px;
-      overflow-y: auto;
-      border-right: 1px solid #ccc;
-      padding: 1rem;
-    }
-    .sidebar-item {
-      display: flex;
-      flex-direction: row;
-      gap: 1rem;
-      margin-bottom: 1rem;
-      align-items: center;
-      cursor: pointer;
-      border-left: 4px solid transparent;
-      padding-left: 4px;
-    }
-    .sidebar-item.active {
-      background-color: #f0f7f8;
-      border-left: 4px solid #377D7A;
-    }
-    .sidebar-item iframe, .sidebar-item img {
-      width: 66%;
-      max-width: 140px;
-      border-radius: 4px;
-    }
-    .info {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: #004c6c;
-    }
-    .description, .tag, .status, .date {
-      font-size: 0.85rem;
-    }
-    .tag {
-      background-color: #e0f0f8;
-      color: #004c6c;
-      padding: 2px 6px;
-      border-radius: 4px;
-      display: inline-block;
-      margin-top: 0.3rem;
-      width: fit-content;
-    }
-    .open-new {
-      display: inline-block;
-      font-size: 0.75rem;
-      margin-top: 4px;
-      color: #004c6c;
-      cursor: pointer;
-      text-decoration: underline;
-    }
-    .content-display {
-      flex: 1;
-      padding: 1rem;
-      max-width: 50%;
-    }
-    .content-display iframe {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border: none;
-    }
-    @media screen and (max-width: 900px) {
-      .main-layout {
-        flex-direction: column;
-      }
-      .content-display {
-        max-width: 100%;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="css/styles.css">
+  <script defer src="js/app.js"></script>
 </head>
 <body>
   <header>
     <h1>Regiongemensam vårddatahantering</h1>
-    <p>Kortfilmer och rapporter från projektet</p>
+    <p>Konkretisering av strategi för regiongemensam vårddatahantering.</p>
   </header>
 
   <div class="disclaimer">
-    <strong>OBS:</strong> På denna sida återfinns test- och betaleveranser från projektet. De officiella resultaten finns här: <a href="https://kunskapsstyrningvard.se/kunskapsstyrningvard/datauppfoljningochanalys/regiongemensamvarddatahantering.89146.html" target="_blank" rel="noopener">kunskapsstyrningvard.se</a>
+    <strong>OBS:</strong> På denna sida återfinns test- och betaleveranser från projektet. De officiella resultaten finns här:
+    <a href="https://kunskapsstyrningvard.se/kunskapsstyrningvard/datauppfoljningochanalys/regiongemensamhanteringavvarddata.89146.html"
+       target="_blank" rel="noopener noreferrer">
+      kunskapsstyrningvard.se
+    </a>
   </div>
 
   <div class="filter">
     <label><input type="checkbox" id="showVideos" checked> Visa filmer</label>
     <label><input type="checkbox" id="showReports" checked> Visa rapporter</label>
-    <button onclick="resetOrder()">Återställ ordning</button>
-    <label for="sortSelect">Sortera:</label>
-    <select id="sortSelect" onchange="loadContent()">
-      <option value="default">Ursprungsordning</option>
-      <option value="date">Datum (senaste först)</option>
-      <option value="status">Status</option>
-    </select>
   </div>
-
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Sök efter titel, beskrivning eller tagg...">
-  </div>
-  <div class="search-info" id="resultCount"></div>
 
   <div class="main-layout">
-    <aside class="sidebar" id="itemList"></aside>
-    <div class="content-display" id="viewer">
-      <iframe src="" allowfullscreen></iframe>
-    </div>
+    <aside class="sidebar" id="itemList">
+      <!-- Innehåll laddas från data.json -->
+    </aside>
+    <main class="content-display" id="viewer">
+      <!-- Dynamic content -->
+    </main>
   </div>
-
-  <script>
-    let currentActiveSrc = null;
-    function createItem(item) {
-      const container = document.getElementById('itemList');
-      const viewer = document.getElementById('viewer').querySelector('iframe');
-      const div = document.createElement('div');
-      div.className = 'sidebar-item';
-      div.dataset.type = item.type;
-      div.dataset.src = item.src;
-
-      const preview = item.preview
-        ? `<img src="${item.preview}" alt="Förhandsvisning">`
-        : item.type === 'video'
-          ? `<iframe src="${item.src}" allowfullscreen></iframe>`
-          : `<img src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg" alt="PDF">`;
-
-      div.innerHTML = `
-        ${preview}
-        <div class="info">
-          <span class="title">${item.title}</span>
-          <span class="description">${item.description}</span>
-          <span class="tag">${item.tag}</span>
-        </div>
-      `;
-
-      div.addEventListener('click', () => {
-        viewer.src = item.src;
-      });
-
-      container.appendChild(div);
-    }
-
-    async function loadContent() {
-      const response = await fetch('data.json');
-      const content = await response.json();
-      const container = document.getElementById('itemList');
-      const viewer = document.getElementById('viewer').querySelector('iframe');
-
-      container.innerHTML = '';
-
-      content.forEach(item => createItem(item));
-
-      viewer.src = content.find(c => c.type === 'video')?.src || '';
-    }
-
-    document.getElementById('showVideos').addEventListener('change', filterItems);
-    document.getElementById('showReports').addEventListener('change', filterItems);
-
-    function filterItems() {
-      const showVideos = document.getElementById('showVideos').checked;
-      const showReports = document.getElementById('showReports').checked;
-      const items = document.querySelectorAll('.sidebar-item');
-
-      items.forEach(item => {
-        const type = item.dataset.type;
-        const visible = (type === 'video' && showVideos) || (type === 'report' && showReports);
-        item.style.display = visible ? 'flex' : 'none';
-      });
-    }
-
-    loadContent();
-  </script>
 </body>
 </html>
