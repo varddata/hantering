@@ -27,7 +27,8 @@
     "title": "Tack!",
     "description": "Tack till alla som har bidragit till projektet",
     "tag": "Regioner",
-    "preview": "bilder/Tack.JPG"
+    "preview": "bilder/Tack.JPG",
+    "featured": true
   },
   {
     "type": "video",
