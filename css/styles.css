@@ -1,0 +1,122 @@
+/* css/styles.css */
+:root {
+  --env-font-family: 'Source Sans Pro', sans-serif;
+  --env-font-color: #222222;
+  --env-background-color: #ffffff;
+  --env-header-background: #377D7A;
+  --header-height: 4rem;
+  --filter-height: 3rem;
+}
+
+/* Grund */
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: var(--env-font-family);
+  margin: 0;
+  padding: 0;
+  background-color: var(--env-background-color);
+  color: var(--env-font-color);
+  font-size: 16px;
+}
+header {
+  background-color: var(--env-header-background);
+  color: white;
+  padding: 1rem 2rem;
+  text-align: center;
+  height: var(--header-height);
+}
+h1 {
+  margin: 0;
+  font-weight: 600;
+}
+.disclaimer {
+  background-color: #ffffff;
+  color: #222222;
+  border-left: 5px solid #FFA500;
+  margin: 1rem auto;
+  padding: 1rem;
+  max-width: 800px;
+  font-size: 0.95rem;
+  text-align: left;
+}
+.disclaimer a {
+  color: #004c6c;
+  text-decoration: underline;
+}
+.filter {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  height: var(--filter-height);
+}
+.main-layout {
+  display: flex;
+  gap: 1rem;
+}
+.sidebar {
+  width: 320px;
+  height: calc(100vh - var(--header-height) - var(--filter-height));
+  overflow-y: auto;
+  border-right: 1px solid #ccc;
+  padding: 1rem;
+}
+.sidebar-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  align-items: center;
+}
+.sidebar-item img {
+  width: 66%;
+  max-width: 140px;
+  border-radius: 4px;
+}
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #004c6c;
+}
+.description {
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+.tag {
+  display: inline-block;
+  background-color: #e0f0f8;
+  color: #004c6c;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  margin-top: 0.3rem;
+}
+.content-display {
+  flex: 1;
+  padding: 1rem;
+  max-width: 50%;
+}
+.content-display iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: none;
+}
+.hidden {
+  display: none !important;
+}
+@media (max-width: 900px) {
+  .main-layout {
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+  .content-display {
+    max-width: 100%;
+  }
+}
