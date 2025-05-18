@@ -7,7 +7,7 @@
   --header-height: 4rem;
   --filter-height: 3rem;
   --sidebar-width: 300px;
-  --content-max-width: 800px; /* maxbredd för videofönstret */
+  --content-max-width: 1000px;
   --gap: 1rem;
   --border-color: #ccc;
 }
@@ -55,8 +55,7 @@ header {
   flex-wrap: wrap;
   padding: 0 1rem 1rem;
 }
-.filter label,
-.sort label {
+.filter label, .sort label {
   margin-right: 0.5rem;
 }
 .sort select {
@@ -64,11 +63,9 @@ header {
   padding: 0.25rem;
 }
 
+/* --- Desktop och breda skärmar --- */
 .grid-layout {
   display: grid;
-  /* max-bredd på desktop */
-  max-width: calc(var(--sidebar-width) * 2 + var(--content-max-width));
-  margin: 0 auto;
   grid-template-areas:
     "top    top     top"
     "left   content right";
@@ -76,6 +73,8 @@ header {
   grid-template-rows: auto 1fr;
   gap: var(--gap);
   padding: 0 1rem 1rem;
+  width: 100%;
+  /* Ingen max-width -- låt den fylla behållarens bredd */
 }
 
 .top-list-container {
@@ -91,12 +90,8 @@ header {
   padding: 0.5rem 0;
 }
 
-.sidebar.left {
-  grid-area: left;
-}
-.sidebar.right {
-  grid-area: right;
-}
+.sidebar.left { grid-area: left; }
+.sidebar.right { grid-area: right; }
 
 .content-display {
   grid-area: content;
@@ -186,11 +181,9 @@ header {
   display: none !important;
 }
 
-/* === MOBIL / PADD === */
+/* --- Mobil och padd (≤900px) --- */
 @media (max-width: 900px) {
   .grid-layout {
-    /* ta bort max-width på mobilen */
-    max-width: 100%;
     grid-template-areas:
       "top"
       "content"
@@ -204,14 +197,14 @@ header {
     top: 0;
     z-index: 10;
     background: var(--env-background-color);
-    max-width: 100%;
-    margin: 0;  /* fyll bredden */
+    max-width: none;  /* ta bort max-bredd för mobil */
+    margin: 0;        /* fyll hela bredden */
   }
   .content-display iframe,
   .content-display video {
-    max-height: none;
+    max-height: none; /* låt höjden följa aspect-ratio */
   }
   .sidebar {
-    max-height: none;
+    max-height: none; /* låt sidofält scrolla genom hela sidan */
   }
 }
