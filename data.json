@@ -16,7 +16,8 @@
     "src": "https://www.canva.com/design/DAGn0V6Cf7Y/6Z_NK2jHgB_IR4-fgPc94A/watch?embed",
     "title": "Thanks to EU",
     "description": "Acknowledgement to support from TSI",
-    "tag": "EU"
+    "tag": "EU",
+    "featured": true
   },
   {
     "type": "video",
@@ -43,7 +44,7 @@
     "type": "video",
     "src": "https://www.canva.com/design/DAGnv07Q840/43_JvUBMv6WvtPT5RZmLvA/watch?embed",
     "title": "13 b Fabric demo Eng",
-    "description": "The project has created a test environment in MS Fabric to show how data can be managed in the new data hub.",
+    "description": "Test environment in MS Fabric.",
     "tag": "",
     "featured": true
   },
@@ -135,23 +136,9 @@
     "type": "video",
     "src": "https://www.canva.com/design/DAGl2vz-M60/_3BoFEZ58-sC6BdtuPkCeA/watch?embed",
     "title": "0. Vårddatahantering, hela filmen",
-    "description": "Det här är en sammanslagning av alla kortfilmerna till en enda lite längre film.",
+    "description": "Sammanslagning av alla kortfilmer.",
     "tag": "Projektet",
     "featured": true
-  },
-  {
-    "type": "report",
-    "src": "rapporter/strategi.pdf",
-    "title": "Strategirapport",
-    "description": "Sammanfattning av strategi",
-    "tag": [
-      "PDF",
-      "Strategi"
-    ],
-    "preview": "bilder/strategi.png",
-    "status": "Utkast",
-    "date": "2025-05-03",
-    "openInNewTab": true
   },
   {
     "type": "report",
@@ -166,19 +153,6 @@
     "status": "Publicerad",
     "date": "2025-05-16",
     "openInNewTab": true
-  },
-  {
-    "type": "report",
-    "src": "rapporter/datamodell.pdf",
-    "title": "Datamodell",
-    "description": "Teknisk beskrivning av modellen",
-    "tag": [
-      "PDF",
-      "Teknik"
-    ],
-    "preview": "bilder/datamodell.png",
-    "status": "Publicerad",
-    "date": "2025-05-17"
   },
   {
     "type": "report",
