@@ -23,24 +23,20 @@ async function loadContent() {
     div.tabIndex = 0;
     div.setAttribute('role', 'button');
     div.dataset.type = item.type;
-    div.dataset.src = item.src;
+    div.dataset.src  = item.src;
 
-    // Preview i sidpanelen
+    // SIDOPANEL: Endast bild eller generic placeholder för video
     let previewHtml;
     if (item.type === 'video') {
-      previewHtml = `
-        <iframe
-          src="${item.src}"
-          allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-          allowfullscreen
-          loading="lazy"
-          title="${item.title}">
-        </iframe>`;
+      if (item.preview) {
+        previewHtml = `<img src="${item.preview}" alt="Förhandsvisning" loading="lazy">`;
+      } else {
+        previewHtml = `<div class="video-placeholder"></div>`;
+      }
     } else if (item.preview) {
       previewHtml = `<img src="${item.preview}" alt="Förhandsvisning" loading="lazy">`;
     } else {
-      previewHtml = `<img src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg"
-                          alt="PDF" loading="lazy">`;
+      previewHtml = `<img src="https://upload.wikimedia.org/wikipedia/commons/8/87/PDF_file_icon.svg" alt="PDF" loading="lazy">`;
     }
 
     div.innerHTML = `
@@ -53,60 +49,51 @@ async function loadContent() {
       </div>
     `;
 
-    // Funktion för att visa innehåll i huvudfönstret
+    // Funktion för att visa i huvudfönstret
     function openViewer() {
       viewer.innerHTML = '';
-
-      // "Öppna i nytt fönster"-knapp i visaren
-      const newWindowBtn = document.createElement('button');
-      newWindowBtn.textContent = 'Öppna i nytt fönster';
-      newWindowBtn.className = 'open-new';
-      newWindowBtn.style.position = 'absolute';
-      newWindowBtn.style.top = '1rem';
-      newWindowBtn.style.right = '1rem';
-      newWindowBtn.addEventListener('click', e => {
+      // "Öppna i nytt fönster" i visaren
+      const btn = document.createElement('button');
+      btn.textContent = 'Öppna i nytt fönster';
+      btn.className = 'open-new';
+      btn.style.position = 'absolute';
+      btn.style.top  = '1rem';
+      btn.style.right= '1rem';
+      btn.addEventListener('click', e => {
         e.stopPropagation();
         window.open(item.src, '_blank', 'noopener');
       });
-
-      // Om du har en mp4‐länk i data.json så visas en video‐tag – ger ljud i mobil:
+      // Välj mp4 eller embed
       if (item.mp4) {
-        const videoEl = document.createElement('video');
-        videoEl.controls = true;
-        videoEl.playsInline = true;
-        videoEl.style.position = 'absolute';
-        videoEl.style.top = '0';
-        videoEl.style.left = '0';
-        videoEl.style.width = '100%';
-        videoEl.style.height = '100%';
-        const sourceEl = document.createElement('source');
-        sourceEl.src = item.mp4;
-        sourceEl.type = 'video/mp4';
-        videoEl.appendChild(sourceEl);
-        viewer.appendChild(videoEl);
+        const vid = document.createElement('video');
+        vid.controls    = true;
+        vid.playsInline = true;
+        vid.style.width = '100%';
+        vid.style.height= '100%';
+        const srcEl    = document.createElement('source');
+        srcEl.src      = item.mp4;
+        srcEl.type     = 'video/mp4';
+        vid.appendChild(srcEl);
+        viewer.appendChild(vid);
       } else {
-        // Default embed-iframe
         const iframe = document.createElement('iframe');
-        const sep = item.src.includes('?') ? '&' : '?';
-        const src = item.src.includes('embed') ? item.src : `${item.src}${sep}embed`;
-        iframe.src = src;
-        iframe.allow = 'autoplay; fullscreen; encrypted-media; picture-in-picture';
+        const sep    = item.src.includes('?') ? '&' : '?';
+        iframe.src       = item.src.includes('embed') ? item.src : `${item.src}${sep}embed`;
+        iframe.allow     = 'autoplay; fullscreen; encrypted-media; picture-in-picture';
         iframe.allowFullscreen = true;
-        iframe.loading = 'lazy';
-        iframe.title = item.title;
+        iframe.loading   = 'lazy';
+        iframe.title     = item.title;
         viewer.appendChild(iframe);
       }
-
-      viewer.appendChild(newWindowBtn);
+      viewer.appendChild(btn);
     }
 
-    // Klick och Enter för att öppna i viewer
+    // Klick / Enter öppnar
     div.addEventListener('click', openViewer);
     div.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') openViewer();
     });
-
-    // "Öppna i nytt fönster"-knapp i sidpanelen
+    // Öppna i nytt fönster från sidpanelen
     div.querySelector('.open-new').addEventListener('click', e => {
       e.stopPropagation();
       window.open(item.src, '_blank', 'noopener');
@@ -115,24 +102,23 @@ async function loadContent() {
     container.appendChild(div);
   });
 
-  // Auto‐öppna första post (video eller rapport)
-  const first = content.find(c => c.type === 'video' || c.type === 'report');
+  // Auto-öppna första
+  const first = content.find(c => c.type==='video' || c.type==='report');
   if (first) {
-    const firstDiv = document.querySelector(`.sidebar-item[data-src="${first.src}"]`);
-    if (firstDiv) firstDiv.click();
+    document.querySelector(`.sidebar-item[data-src="${first.src}"]`).click();
   }
 
-  // Filtrerings‐checkboxar
+  // Filtrering
   document.getElementById('showVideos').addEventListener('change', filterItems);
   document.getElementById('showReports').addEventListener('change', filterItems);
 }
 
 function filterItems() {
-  const showVideos = document.getElementById('showVideos').checked;
+  const showVideos  = document.getElementById('showVideos').checked;
   const showReports = document.getElementById('showReports').checked;
   document.querySelectorAll('.sidebar-item').forEach(item => {
     const type = item.dataset.type;
-    const visible = (type === 'video' && showVideos) || (type === 'report' && showReports);
-    item.classList.toggle('hidden', !visible);
+    const vis  = (type==='video' && showVideos) || (type==='report' && showReports);
+    item.classList.toggle('hidden', !vis);
   });
 }
