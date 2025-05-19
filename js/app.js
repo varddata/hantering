@@ -54,14 +54,18 @@ async function main() {
     return div;
   }
 
-  function sortItems(list) {
-    const mode = sortOrder.value;
-    if (mode==='date') {
-      list.sort((a,b)=> new Date(b.date||0) - new Date(a.date||0));
-    } else if (mode==='title') {
-      list.sort((a,b)=> a.title.localeCompare(b.title));
-    }
+function sortItems(list) {
+  const mode = sortOrder.value = 'recommended';
+  if (mode === 'recommended') {
+    // sortera efter ditt nya order‐fält
+    list.sort((a, b) => (a.order || 0) - (b.order || 0));
+  } else if (mode === 'date') {
+    list.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+  } else if (mode === 'title') {
+    list.sort((a, b) => a.title.localeCompare(b.title));
   }
+  // 'default' behåller listans ordning i data.json (ingen förändring)
+}
 
   function render() {
     let featured = items.filter(i=>i.featured);
