@@ -3,14 +3,15 @@
     "type": "video",
     "src": "https://www.canva.com/design/DAGnYCYNOHE/7jb4vVU88fF1IOVaQTsz9Q/watch?embed",
     "title": "1. Fokus sekundäranvändning i hälso- och sjukvården",
-    "description": "Förklarar skillnaden på primär- och sekundäranvändning och förklarar att projektet fokuserar på sekundäranvändningen.",
+    "description": "Primär- och sekundäranvändning - förklarar att projektet fokuserar på sekundäranvändningen.",
     "tag": [
       "Data",
       "Sekundäranvändning"
     ],
     "preview": "bilder/Sekundär.JPG",
     "status": "Ny",
-    "date": "2025-05-18"
+    "date": "2025-05-18",
++   "order": 1
   },
   {
     "type": "video",
@@ -36,7 +37,8 @@
     "title": "15. Nästa steg",
     "description": "Vad projektet har rekommenderat kommer hända efter projektslut.",
     "tag": "Genomförande",
-    "preview": "bilder/Nästa steg.JPG"
+    "preview": "bilder/Nästa steg.JPG",
++   "order": 15
   },
   {
     "type": "video",
@@ -44,7 +46,8 @@
     "title": "14. Sammanfattning",
     "description": "Sammanfattar nyttorna med projektet",
     "tag": "Nytta",
-    "preview": "bilder/Sammanfattning.JPG"
+    "preview": "bilder/Sammanfattning.JPG",
++   "order": 14
   },
   {
     "type": "video",
@@ -61,7 +64,8 @@
     "title": "13 a Fabric demo Swe",
     "description": "Projektet har skapat en testmiljö i MS Fabric som visar hur datahanteringen kan se ut i vårddatahubben.",
     "tag": "Vårddata",
-    "preview": "bilder/Fabric sve.JPG"
+    "preview": "bilder/Fabric sve.JPG",
++   "order": 13
   },
   {
     "type": "video",
@@ -69,7 +73,8 @@
     "title": "12. Secure Process Environment",
     "description": "Så här fungerar en säker processmiljö.",
     "tag": "Säkerhet, data",
-    "preview": "bilder/SPE.JPG"
+    "preview": "bilder/SPE.JPG",
++   "order": 12
   },
   {
     "type": "video",
@@ -77,7 +82,8 @@
     "title": "11. Användningsfall 2",
     "description": "Hur analys av en vårdprocess kan gå till i hubben.",
     "tag": "Hubb, Kompetenscentrum, Vårddata",
-    "preview": "bilder/Anv 2.JPG"
+    "preview": "bilder/Anv 2.JPG",
++   "order": 11
   },
   {
     "type": "video",
@@ -85,7 +91,8 @@
     "title": "10. Användningsfall 1",
     "description": "Beskrivning av det första fallet: effektivare överföring till register",
     "tag": "Vårddata, Register",
-    "preview": "bilder/Anv 1.JPG"
+    "preview": "bilder/Anv 1.JPG",
++   "order": 10
   },
   {
     "type": "video",
@@ -93,7 +100,8 @@
     "title": "9. Pseudonymisering",
     "description": "Exempel på hur pseudonymisering kan gå till i hubben.",
     "tag": "Pseudonymisering, vårddata",
-    "preview": "bilder/Pseudo.JPG"
+    "preview": "bilder/Pseudo.JPG",
++   "order": 9
   },
   {
     "type": "video",
@@ -101,7 +109,8 @@
     "title": "8. Metadata",
     "description": "Vikten av grundlig metadatahantering",
     "tag": "Metadata",
-    "preview": "bilder/Metadata.JPG"
+    "preview": "bilder/Metadata.JPG",
++   "order": 8
   },
   {
     "type": "video",
@@ -109,7 +118,8 @@
     "title": "7. Användningsfall",
     "description": "Introduktion till två användningsfall som kan hanteras av vårddatahubben och kompetenscentrumet",
     "tag": "",
-    "preview": "bilder/Två anv.JPG"
+    "preview": "bilder/Två anv.JPG",
++   "order": 7
   },
   {
     "type": "video",
@@ -117,7 +127,8 @@
     "title": "6. Lösningen",
     "description": "Övergripande illustration av projektets förslag till lösning",
     "tag": "Datahantering",
-    "preview": "bilder/Lösning.JPG"
+    "preview": "bilder/Lösning.JPG",
++   "order": 6
   },
   {
     "type": "video",
@@ -125,7 +136,8 @@
     "title": "5. Datahubb",
     "description": "Fördjupning i vårddatahubbens funktion",
     "tag": "Vårddatahubb",
-    "preview": "bilder/Vårddatahubb.JPG"
+    "preview": "bilder/Vårddatahubb.JPG",
++   "order": 5
   },
   {
     "type": "video",
@@ -133,7 +145,8 @@
     "title": "4. Mognad och ramverk",
     "description": "Vikten av att regionerna påbörjar ett eget arbete mot en gemensam vårddatahantering",
     "tag": "Ramverk, Datahantering",
-    "preview": "bilder/Ramverk.JPG"
+    "preview": "bilder/Ramverk.JPG",
++   "order": 4
   },
   {
     "type": "video",
@@ -141,7 +154,8 @@
     "title": "3. Dataanvändning",
     "description": "Hur vill vi använda data i vården?",
     "tag": "Analys",
-    "preview": "bilder/Dataanvändning.JPG"
+    "preview": "bilder/Dataanvändning.JPG",
++   "order": 3
   },
   {
     "type": "video",
@@ -149,7 +163,8 @@
     "title": "2. Utmaningen",
     "description": "Utmaningen ute i regionerna som projektet utgick ifrån vid uppstart.",
     "tag": "Datautmaningar",
-    "preview": "bilder/Utmaningar.JPG"
+    "preview": "bilder/Utmaningar.JPG",
++   "order": 2
   },
   {
     "type": "video",
@@ -159,6 +174,24 @@
     "tag": "Projektet",
     "preview": "bilder/Hela.JPG",
     "featured": true
+  },
+  {
+    "type": "video",
+    "src": "https://qcnl.tv/e/hDOtyJ0Pwii3m_3HZims-A%22",
+    "title": "Webbinarium från december 2024",
+    "description": "Projektstatus efter höstens arbete",
+    "tag": "Webbinarium",
+    "preview": "bilder/Höst.JPG",
++   "order": 16
+  },
+  {
+    "type": "video",
+    "src": "https://qcnl.tv/e/bxAtdvOpI8HN8URS3pVK6A%22",
+    "title": "Webbinarium från mars 2025",
+    "description": "Projektstatus efter arbete aug-feb",
+    "tag": "Webbinarium",
+    "preview": "bilder/Vår.JPG",
++   "order": 17
   },
   {
     "type": "report",
