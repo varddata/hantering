@@ -11,7 +11,7 @@
     "preview": "bilder/Sekundär.JPG",
     "status": "Ny",
     "date": "2025-05-18",
-+   "order": 1
+    "order": 1
   },
   {
     "type": "video",
@@ -38,7 +38,7 @@
     "description": "Vad projektet har rekommenderat kommer hända efter projektslut.",
     "tag": "Genomförande",
     "preview": "bilder/Nästa steg.JPG",
-+   "order": 15
+    "order": 15
   },
   {
     "type": "video",
@@ -47,7 +47,7 @@
     "description": "Sammanfattar nyttorna med projektet",
     "tag": "Nytta",
     "preview": "bilder/Sammanfattning.JPG",
-+   "order": 14
+    "order": 14
   },
   {
     "type": "video",
@@ -65,7 +65,7 @@
     "description": "Projektet har skapat en testmiljö i MS Fabric som visar hur datahanteringen kan se ut i vårddatahubben.",
     "tag": "Vårddata",
     "preview": "bilder/Fabric sve.JPG",
-+   "order": 13
+    "order": 13
   },
   {
     "type": "video",
@@ -74,7 +74,7 @@
     "description": "Så här fungerar en säker processmiljö.",
     "tag": "Säkerhet, data",
     "preview": "bilder/SPE.JPG",
-+   "order": 12
+    "order": 12
   },
   {
     "type": "video",
@@ -83,7 +83,7 @@
     "description": "Hur analys av en vårdprocess kan gå till i hubben.",
     "tag": "Hubb, Kompetenscentrum, Vårddata",
     "preview": "bilder/Anv 2.JPG",
-+   "order": 11
+    "order": 11
   },
   {
     "type": "video",
@@ -92,7 +92,7 @@
     "description": "Beskrivning av det första fallet: effektivare överföring till register",
     "tag": "Vårddata, Register",
     "preview": "bilder/Anv 1.JPG",
-+   "order": 10
+    "order": 10
   },
   {
     "type": "video",
@@ -101,7 +101,7 @@
     "description": "Exempel på hur pseudonymisering kan gå till i hubben.",
     "tag": "Pseudonymisering, vårddata",
     "preview": "bilder/Pseudo.JPG",
-+   "order": 9
+    "order": 9
   },
   {
     "type": "video",
@@ -110,7 +110,7 @@
     "description": "Vikten av grundlig metadatahantering",
     "tag": "Metadata",
     "preview": "bilder/Metadata.JPG",
-+   "order": 8
+    "order": 8
   },
   {
     "type": "video",
@@ -118,8 +118,8 @@
     "title": "7. Användningsfall",
     "description": "Introduktion till två användningsfall som kan hanteras av vårddatahubben och kompetenscentrumet",
     "tag": "",
-    "preview": "bilder/Två anv.JPG",
-+   "order": 7
+    "preview": "bilder/Anvandningsfall.JPG",
+    "order": 7
   },
   {
     "type": "video",
@@ -128,7 +128,7 @@
     "description": "Övergripande illustration av projektets förslag till lösning",
     "tag": "Datahantering",
     "preview": "bilder/Lösning.JPG",
-+   "order": 6
+    "order": 6
   },
   {
     "type": "video",
@@ -137,7 +137,7 @@
     "description": "Fördjupning i vårddatahubbens funktion",
     "tag": "Vårddatahubb",
     "preview": "bilder/Vårddatahubb.JPG",
-+   "order": 5
+    "order": 5
   },
   {
     "type": "video",
@@ -146,7 +146,7 @@
     "description": "Vikten av att regionerna påbörjar ett eget arbete mot en gemensam vårddatahantering",
     "tag": "Ramverk, Datahantering",
     "preview": "bilder/Ramverk.JPG",
-+   "order": 4
+    "order": 4
   },
   {
     "type": "video",
@@ -155,7 +155,7 @@
     "description": "Hur vill vi använda data i vården?",
     "tag": "Analys",
     "preview": "bilder/Dataanvändning.JPG",
-+   "order": 3
+    "order": 3
   },
   {
     "type": "video",
@@ -164,7 +164,7 @@
     "description": "Utmaningen ute i regionerna som projektet utgick ifrån vid uppstart.",
     "tag": "Datautmaningar",
     "preview": "bilder/Utmaningar.JPG",
-+   "order": 2
+    "order": 2
   },
   {
     "type": "video",
@@ -177,16 +177,16 @@
   },
   {
     "type": "video",
-    "src": "https://qcnl.tv/e/hDOtyJ0Pwii3m_3HZims-A%22",
+    "src": "https://qcnl.tv/e/hDOtyJ0Pwii3m_3HZims-A",
     "title": "Webbinarium från december 2024",
     "description": "Projektstatus efter höstens arbete",
     "tag": "Webbinarium",
     "preview": "bilder/Höst.JPG",
-+   "order": 16
+    "order": 16
   },
   {
     "type": "video",
-    "src": "https://qcnl.tv/e/bxAtdvOpI8HN8URS3pVK6A%22",
+    "src": "https://qcnl.tv/e/bxAtdvOpI8HN8URS3pVK6A",
     "title": "Webbinarium från mars 2025",
     "description": "Projektstatus efter arbete aug-feb",
     "tag": "Webbinarium",
