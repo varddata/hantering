@@ -2,52 +2,196 @@
   {
     "type": "video",
     "src": "https://www.canva.com/design/DAGnYCYNOHE/7jb4vVU88fF1IOVaQTsz9Q/watch?embed",
-    "title": "Fokus sekundäranvändning i hälso- och sjukvården",
-    "description": "Förklarar skillnaden på primär- och sekundäranvändning och förklarar att projektet fokuserar på sekundäranvändningen.",
+    "title": "1. Fokus sekundäranvändning i hälso- och sjukvården",
+    "description": "Primär- och sekundäranvändning - förklarar att projektet fokuserar på sekundäranvändningen.",
     "tag": [
       "Data",
       "Sekundäranvändning"
     ],
+    "preview": "bilder/Sekundär.JPG",
     "status": "Ny",
-    "date": "2025-05-18"
+    "date": "2025-05-18",
+    "order": 1
   },
   {
     "type": "video",
-    "src": "https://www.youtube.com/embed/OKl4v1GAnGI",
-    "title": "Datakvalitet",
-    "description": "Hur vi säkrar datakvalitet",
-    "tag": [
-      "Film",
-      "Kvalitet"
-    ],
-    "status": "Publicerad",
-    "date": "2025-05-14"
+    "src": "https://www.canva.com/design/DAGn0V6Cf7Y/6Z_NK2jHgB_IR4-fgPc94A/watch?embed",
+    "title": "Thanks to EU",
+    "description": "Acknowledgement to support from TSI",
+    "tag": "EU",
+    "preview": "bilder/Thanks.JPG",
+    "featured": true
   },
   {
     "type": "video",
-    "src": "https://www.youtube.com/embed/y6120QOlsfU",
-    "title": "Användningsfall",
-    "description": "Exempel på tillämpningar",
-    "tag": [
-      "Film",
-      "Forskning"
-    ],
-    "status": "Publicerad",
-    "date": "2025-05-15"
+    "src": "https://www.canva.com/design/DAGn0C_B7Qs/M9sDGRPdkWeyDQnxi7kFuA/watch?embed",
+    "title": "Tack!",
+    "description": "Tack till alla som har bidragit till projektet",
+    "tag": "Regioner",
+    "preview": "bilder/Tack.JPG",
+    "featured": true
   },
   {
-    "type": "report",
-    "src": "rapporter/strategi.pdf",
-    "title": "Strategirapport",
-    "description": "Sammanfattning av strategi",
-    "tag": [
-      "PDF",
-      "Strategi"
-    ],
-    "preview": "bilder/strategi.png",
-    "status": "Utkast",
-    "date": "2025-05-03",
-    "openInNewTab": true
+    "type": "video",
+    "src": "https://www.canva.com/design/DAGn0JK7fdE/2FzCAH_VSRbi4Fqjj2X4uQ/watch?embed",
+    "title": "15. Nästa steg",
+    "description": "Vad projektet har rekommenderat kommer hända efter projektslut.",
+    "tag": "Genomförande",
+    "preview": "bilder/Nästa steg.JPG",
+    "order": 15
+  },
+  {
+    "type": "video",
+    "src": "https://www.canva.com/design/DAGnz9MZMPY/Hh3zj8uASt-9vAO58nUkFw/watch?embed",
+    "title": "14. Sammanfattning",
+    "description": "Sammanfattar nyttorna med projektet",
+    "tag": "Nytta",
+    "preview": "bilder/Sammanfattning.JPG",
+    "order": 14
+  },
+  {
+    "type": "video",
+    "src": "https://www.canva.com/design/DAGnv07Q840/43_JvUBMv6WvtPT5RZmLvA/watch?embed",
+    "title": "13 b Fabric demo Eng",
+    "description": "Test environment in MS Fabric.",
+    "tag": "",
+    "preview": "bilder/Fabric eng.JPG",
+    "featured": true
+  },
+  {
+    "type": "video",
+    "src": "https://www.canva.com/design/DAGnvk3LxcA/-TrtyUb4HNcuITwQlT5WWg/watch?embed",
+    "title": "13 a Fabric demo Swe",
+    "description": "Projektet har skapat en testmiljö i MS Fabric som visar hur datahanteringen kan se ut i vårddatahubben.",
+    "tag": "Vårddata",
+    "preview": "bilder/Fabric sve.JPG",
+    "order": 13
+  },
+  {
+    "type": "video",
+    "src": "https://www.canva.com/design/DAGnzYqBgxM/2wrxe3bzfQrTlZrafNi-8g/watch?embed",
+    "title": "12. Secure Process Environment",
+    "description": "Så här fungerar en säker processmiljö.",
+    "tag": "Säkerhet, data",
+    "preview": "bilder/SPE.JPG",
+    "order": 12
+  },
+  {
+    "type": "video",
+    "src": "https://www.canva.com/design/DAGnzWUFy-s/5RxA40Z7x8_Uy6ZLm8bPAQ/watch?embed",
+    "title": "11. Användningsfall 2",
+    "description": "Hur analys av en vårdprocess kan gå till i hubben.",
+    "tag": "Hubb, Kompetenscentrum, Vårddata",
+    "preview": "bilder/Anv 2.JPG",
+    "order": 11
+  },
+  {
+    "type": "video",
+    "src": "https://www.canva.com/design/DAGnzTb7Yi8/63Lt_ATYN5R00cQwXnR-wA/watch?embed",
+    "title": "10. Användningsfall 1",
+    "description": "Beskrivning av det första fallet: effektivare överföring till register",
+    "tag": "Vårddata, Register",
+    "preview": "bilder/Anv 1.JPG",
+    "order": 10
+  },
+  {
+    "type": "video",
+    "src": "https://www.canva.com/design/DAGnzU2fBsc/sdcF_IjUAdms-C_KaF4UAg/watch?embed",
+    "title": "9. Pseudonymisering",
+    "description": "Exempel på hur pseudonymisering kan gå till i hubben.",
+    "tag": "Pseudonymisering, vårddata",
+    "preview": "bilder/Pseudo.JPG",
+    "order": 9
+  },
+  {
+    "type": "video",
+    "src": "https://www.canva.com/design/DAGnzd4D8BI/tUgdxG2YgcifZyq_0caQ0w/watch?embed",
+    "title": "8. Metadata",
+    "description": "Vikten av grundlig metadatahantering",
+    "tag": "Metadata",
+    "preview": "bilder/Metadata.JPG",
+    "order": 8
+  },
+  {
+    "type": "video",
+    "src": "https://www.canva.com/design/DAGnzDUUwzs/4TNeG1RVcHSUWCvPE6a8pg/watch?embed",
+    "title": "7. Användningsfall",
+    "description": "Introduktion till två användningsfall som kan hanteras av vårddatahubben och kompetenscentrumet",
+    "tag": "",
+    "preview": "bilder/Anvandningsfall.JPG",
+    "order": 7
+  },
+  {
+    "type": "video",
+    "src": "https://www.canva.com/design/DAGnzPVpTo4/GGUiGVp9aC_hVXbly0riBA/watch?embed",
+    "title": "6. Lösningen",
+    "description": "Övergripande illustration av projektets förslag till lösning",
+    "tag": "Datahantering",
+    "preview": "bilder/Lösning.JPG",
+    "order": 6
+  },
+  {
+    "type": "video",
+    "src": "https://www.canva.com/design/DAGnzAyEqok/aBE1U_TqDrPSpmGdwDFfEQ/watch?embed",
+    "title": "5. Datahubb",
+    "description": "Fördjupning i vårddatahubbens funktion",
+    "tag": "Vårddatahubb",
+    "preview": "bilder/Vårddatahubb.JPG",
+    "order": 5
+  },
+  {
+    "type": "video",
+    "src": "https://www.canva.com/design/DAGnzFwhEqw/AUPVVNLBwPsPkgZUUP9SVg/watch?embed",
+    "title": "4. Mognad och ramverk",
+    "description": "Vikten av att regionerna påbörjar ett eget arbete mot en gemensam vårddatahantering",
+    "tag": "Ramverk, Datahantering",
+    "preview": "bilder/Ramverk.JPG",
+    "order": 4
+  },
+  {
+    "type": "video",
+    "src": "https://www.canva.com/design/DAGnzHdwWCc/c6ShnYfx7FEfIARfTy5PhQ/watch?embed",
+    "title": "3. Dataanvändning",
+    "description": "Hur vill vi använda data i vården?",
+    "tag": "Analys",
+    "preview": "bilder/Dataanvändning.JPG",
+    "order": 3
+  },
+  {
+    "type": "video",
+    "src": "https://www.canva.com/design/DAGnYEv6iAE/pS_UX8yBN1CQ7JXAYuygkQ/watch?embed",
+    "title": "2. Utmaningen",
+    "description": "Utmaningen ute i regionerna som projektet utgick ifrån vid uppstart.",
+    "tag": "Datautmaningar",
+    "preview": "bilder/Utmaningar.JPG",
+    "order": 2
+  },
+  {
+    "type": "video",
+    "src": "https://www.canva.com/design/DAGl2vz-M60/_3BoFEZ58-sC6BdtuPkCeA/watch?embed",
+    "title": "0. Vårddatahantering, hela filmen",
+    "description": "Sammanslagning av alla kortfilmer.",
+    "tag": "Projektet",
+    "preview": "bilder/Hela.JPG",
+    "featured": true
+  },
+  {
+    "type": "video",
+    "src": "https://qcnl.tv/e/hDOtyJ0Pwii3m_3HZims-A",
+    "title": "Webbinarium från december 2024",
+    "description": "Projektstatus efter höstens arbete",
+    "tag": "Webbinarium",
+    "preview": "bilder/Höst.JPG",
+    "order": 16
+  },
+  {
+    "type": "video",
+    "src": "https://qcnl.tv/e/bxAtdvOpI8HN8URS3pVK6A",
+    "title": "Webbinarium från mars 2025",
+    "description": "Projektstatus efter arbete aug-feb",
+    "tag": "Webbinarium",
+    "preview": "bilder/Vår.JPG",
+    "featured": true
   },
   {
     "type": "report",
@@ -62,19 +206,6 @@
     "status": "Publicerad",
     "date": "2025-05-16",
     "openInNewTab": true
-  },
-  {
-    "type": "report",
-    "src": "rapporter/datamodell.pdf",
-    "title": "Datamodell",
-    "description": "Teknisk beskrivning av modellen",
-    "tag": [
-      "PDF",
-      "Teknik"
-    ],
-    "preview": "bilder/datamodell.png",
-    "status": "Publicerad",
-    "date": "2025-05-17"
   },
   {
     "type": "report",
