@@ -191,7 +191,7 @@
     "description": "Projektstatus efter arbete aug-feb",
     "tag": "Webbinarium",
     "preview": "bilder/Vår.JPG",
-+   "order": 17
+    "featured": true
   },
   {
     "type": "report",
